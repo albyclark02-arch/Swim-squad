@@ -17,41 +17,30 @@
   --sat:#1a4a2a;--sat-bg:#e8f5ec;--sat-light:#f0f8f2;
   --yes:#0d6e3a;--yes-bg:#e6f5ed;
   --red:#c0392b;--red-bg:#fef0f0;
-  --streak:#e8a020;
-  --frog:#e8001a;
+  --streak:#e8a020;--frog:#e8001a;
   --font:'DM Sans',sans-serif;--mono:'DM Mono',monospace;
 }
-html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;}
+html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:15px;}
 .app{max-width:700px;margin:0 auto;padding:0 0 4rem;}
-
-/* TOPBAR */
 .topbar{background:var(--card);border-bottom:1px solid var(--border);padding:12px 18px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;}
 .logo-area{display:flex;align-items:center;gap:10px;}
 .logo-frog{width:38px;height:38px;border-radius:10px;background:var(--frog);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
 .topbar-title{font-size:16px;font-weight:700;letter-spacing:-.02em;}
 .topbar-sub{font-size:11px;color:var(--muted);}
 .avatar-sm{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;cursor:pointer;}
-
-/* NAV */
 .nav{display:flex;background:var(--card);border-bottom:1px solid var(--border);overflow-x:auto;position:sticky;top:63px;z-index:9;}
 .nav-btn{flex:1;min-width:60px;padding:11px 6px;text-align:center;font-size:12px;font-weight:500;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap;font-family:var(--font);}
 .nav-btn.active{color:var(--text);border-bottom-color:var(--frog);}
-
-/* SCREENS */
 .screen{display:none;padding:14px 14px 0;}
 .screen.active{display:block;}
 .sh{font-size:11px;font-weight:600;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin:0 0 10px;}
 .card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
-
-/* SESSION CARDS */
 .session-card{border-radius:12px;padding:12px 14px;margin-bottom:8px;}
 .session-card.am{background:var(--am-light);border:1px solid #c8ddf0;}
 .session-card.pm{background:var(--pm-light);border:1px solid #d8c8f0;}
 .session-card.sat{background:var(--sat-light);border:1px solid #c0dfc8;}
 .session-label{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin-bottom:8px;}
-.session-label.am{color:var(--am);}
-.session-label.pm{color:var(--pm);}
-.session-label.sat{color:var(--sat);}
+.session-label.am{color:var(--am);}.session-label.pm{color:var(--pm);}.session-label.sat{color:var(--sat);}
 .session-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .attendee-stack{display:flex;}
 .attendee-stack .av{width:26px;height:26px;border-radius:50%;border:2px solid white;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-left:-5px;}
@@ -62,8 +51,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .tog:hover{border-color:var(--text);color:var(--text);}
 .tog.yes{background:var(--yes-bg);border-color:var(--yes);color:var(--yes);}
 .tog.no{background:var(--red-bg);border-color:var(--red);color:var(--red);}
-
-/* ROSTER */
 .roster-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);}
 .roster-row:last-child{border-bottom:none;}
 .r-name{flex:1;font-size:14px;}
@@ -72,8 +59,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .spill.am{background:var(--am-bg);color:var(--am);}
 .spill.pm{background:var(--pm-bg);color:var(--pm);}
 .spill.sat{background:var(--sat-bg);color:var(--sat);}
-
-/* WEEK TABLE */
 .week-planner{overflow-x:auto;}
 .wp-table{border-collapse:collapse;width:100%;min-width:520px;}
 .wp-table th{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;padding:8px 4px;text-align:center;background:var(--bg);border-bottom:1px solid var(--border);}
@@ -84,8 +69,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .mini-tog{width:32px;height:22px;border-radius:5px;border:1.5px solid var(--border2);background:none;font-size:10px;font-weight:700;cursor:pointer;color:var(--muted);transition:all .1s;font-family:var(--mono);}
 .mini-tog.yes{background:var(--yes-bg);border-color:var(--yes);color:var(--yes);}
 .mini-tog.no{background:var(--red-bg);border-color:var(--red);color:var(--red);}
-
-/* CALENDAR */
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;}
 .cal-cell{aspect-ratio:1;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;background:var(--bg);color:var(--hint);}
 .cal-cell.am1{background:var(--am-bg);color:var(--am);}
@@ -94,8 +77,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .cal-cell.full{background:#1a3a5c;color:white;}
 .cal-cell.today{outline:2px solid var(--frog);outline-offset:1px;}
 .cal-cell.empty{background:none;}
-
-/* CHAT */
 .chat-area{display:flex;flex-direction:column;gap:8px;max-height:380px;overflow-y:auto;margin-bottom:12px;padding-right:2px;}
 .msg{display:flex;flex-direction:column;}
 .msg.mine{align-items:flex-end;}
@@ -103,18 +84,12 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .bubble{padding:8px 12px;border-radius:14px;font-size:13px;line-height:1.5;max-width:78%;}
 .bubble.them{background:var(--bg);border:1px solid var(--border);border-bottom-left-radius:4px;}
 .bubble.mine{background:var(--am);color:white;border-bottom-right-radius:4px;}
-.react-row{display:flex;gap:4px;margin-top:3px;}
-.react{font-size:12px;background:var(--bg);border:1px solid var(--border);border-radius:99px;padding:2px 7px;cursor:pointer;}
-
-/* STATS */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px;}
 .stat-num{font-size:28px;font-weight:700;letter-spacing:-.03em;margin-bottom:2px;}
 .sdots{display:flex;gap:4px;margin-top:8px;}
 .sdot{width:9px;height:9px;border-radius:50%;background:var(--border);}
 .sdot.on{background:var(--streak);}
-
-/* AUTH */
 .auth-wrap{max-width:380px;margin:2.5rem auto;padding:0 16px;}
 .auth-card{background:var(--card);border:1px solid var(--border);border-radius:18px;padding:26px 22px;}
 .frog-logo{width:52px;height:52px;background:var(--frog);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:30px;margin-bottom:14px;}
@@ -123,19 +98,30 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 .field.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:2px;}
 .btn-main{width:100%;padding:11px;background:var(--frog);color:white;border:none;border-radius:10px;font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;margin-bottom:8px;}
 .btn-main:hover{background:#a0000f;}
+.btn-main:disabled{background:#ccc;cursor:not-allowed;}
 .btn-sec{width:100%;padding:10px;background:none;color:var(--text);border:1.5px solid var(--border2);border-radius:10px;font-size:14px;font-weight:600;font-family:var(--font);cursor:pointer;margin-bottom:8px;}
 .btn-sec:hover{background:var(--bg);}
 .err{font-size:13px;color:var(--red);margin-bottom:8px;}
 .code-display{font-family:var(--mono);font-size:22px;font-weight:700;letter-spacing:4px;text-align:center;background:var(--bg);border-radius:10px;padding:14px;margin:10px 0;color:var(--am);}
+.loading-overlay{position:fixed;inset:0;background:rgba(245,244,240,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;gap:12px;}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--frog);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--border);display:inline-block;margin-right:5px;}
+.sync-dot.saving{background:var(--streak);}
+.sync-dot.saved{background:var(--yes);}
+.sync-dot.error{background:var(--red);}
 </style>
 </head>
 <body>
 <div class="app">
 
-<!-- AUTH -->
-<div id="view-auth">
-  <div class="auth-wrap">
+<div class="loading-overlay" id="loading-overlay">
+  <div class="spinner"></div>
+  <div style="font-size:14px;color:var(--muted);" id="loading-msg">Connecting to server…</div>
+</div>
 
+<div id="view-auth" style="display:none;">
+  <div class="auth-wrap">
     <div id="auth-choose">
       <div class="auth-card">
         <div class="frog-logo">🐸</div>
@@ -145,31 +131,28 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
         <button class="btn-sec" onclick="showPanel('auth-create')">Create a new group</button>
       </div>
     </div>
-
     <div id="auth-join" style="display:none;">
       <div class="auth-card">
         <div style="font-size:16px;font-weight:700;margin-bottom:16px;">Join a group</div>
         <input class="field mono" id="join-code" placeholder="INVITE CODE" maxlength="12"/>
         <input class="field" id="join-name" placeholder="Your name"/>
         <div class="err" id="join-err" style="display:none;"></div>
-        <button class="btn-main" onclick="doJoin()">Join</button>
+        <button class="btn-main" id="join-btn" onclick="doJoin()">Join</button>
         <button class="btn-sec" onclick="showPanel('auth-choose')">Back</button>
       </div>
     </div>
-
     <div id="auth-create" style="display:none;">
       <div class="auth-card">
         <div style="font-size:16px;font-weight:700;margin-bottom:16px;">Create a group</div>
         <input class="field" id="create-name" placeholder="Your name"/>
-        <input class="field" id="create-group" placeholder="Group name (e.g. Broadbeach Squad)"/>
+        <input class="field" id="create-group-name" placeholder="Group name (e.g. Broadbeach Squad)"/>
         <div style="font-size:13px;color:var(--muted);margin-bottom:6px;">Choose an invite code for your friends</div>
         <input class="field mono" id="create-code" placeholder="e.g. BEACH25" maxlength="12" oninput="this.value=this.value.toUpperCase()"/>
         <div class="err" id="create-err" style="display:none;"></div>
-        <button class="btn-main" onclick="doCreate()">Create group</button>
+        <button class="btn-main" id="create-btn" onclick="doCreate()">Create group</button>
         <button class="btn-sec" onclick="showPanel('auth-choose')">Back</button>
       </div>
     </div>
-
     <div id="auth-created" style="display:none;">
       <div class="auth-card">
         <div class="frog-logo">🐸</div>
@@ -180,11 +163,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
         <button class="btn-main" onclick="enterApp()">Open the app ›</button>
       </div>
     </div>
-
   </div>
 </div>
 
-<!-- MAIN APP -->
 <div id="view-app" style="display:none;">
   <div class="topbar">
     <div class="logo-area">
@@ -197,12 +178,11 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
     <div style="display:flex;align-items:center;gap:8px;">
       <div style="text-align:right;">
         <div style="font-size:13px;font-weight:600;" id="top-name"></div>
-        <div style="font-size:11px;color:var(--muted);" id="top-streak"></div>
+        <div style="font-size:11px;color:var(--muted);display:flex;align-items:center;justify-content:flex-end;" id="sync-status"></div>
       </div>
       <div class="avatar-sm" id="top-av" title="Tap to sign out" onclick="signOut()"></div>
     </div>
   </div>
-
   <div class="nav">
     <button class="nav-btn active" onclick="switchTab('today',this)">Today</button>
     <button class="nav-btn" onclick="switchTab('week',this)">Week plan</button>
@@ -211,7 +191,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
     <button class="nav-btn" onclick="switchTab('stats',this)">Stats</button>
   </div>
 
-  <!-- TODAY -->
   <div class="screen active" id="tab-today">
     <div class="sh">Today's sessions</div>
     <div id="today-sessions"></div>
@@ -219,7 +198,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
     <div class="card" style="padding:12px 14px;" id="today-roster"></div>
   </div>
 
-  <!-- WEEK PLAN -->
   <div class="screen" id="tab-week">
     <div class="sh">Your sessions this week</div>
     <div style="font-size:13px;color:var(--muted);margin-bottom:10px;">Tap Yes / No for each session. Your squad can see your plan.</div>
@@ -232,7 +210,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
     </div>
   </div>
 
-  <!-- CALENDAR -->
   <div class="screen" id="tab-calendar">
     <div class="sh">Swim history</div>
     <div class="card">
@@ -254,7 +231,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
     </div>
   </div>
 
-  <!-- CHAT -->
   <div class="screen" id="tab-chat">
     <div class="sh">Group chat</div>
     <div class="card">
@@ -266,7 +242,6 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
     </div>
   </div>
 
-  <!-- STATS -->
   <div class="screen" id="tab-stats">
     <div class="sh">Your stats</div>
     <div class="stat-grid">
@@ -290,99 +265,121 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
     </div>
   </div>
 </div>
-
 </div>
+
 <script>
+const BIN_ID  = '69e2fdd3856a68218947a034';
+const API_KEY = '$2a$10$4HvE90ibkzV7iR7U53DRH.XMgq29fuTyxrYwty9CoAp.SBKWodmMO';
+const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
 const SESS={
-  am525:{cls:'am',bg:'#e8f0f8',col:'#1a3a5c',label:'5:25 AM · Mon–Fri'},
-  pm530:{cls:'pm',bg:'#f0e8f8',col:'#4a2060',label:'5:30 PM · Mon–Fri'},
-  sat630:{cls:'sat',bg:'#e8f5ec',col:'#1a4a2a',label:'6:30 AM · Saturday'}
+  am525:{cls:'am',col:'#1a3a5c',label:'5:25 AM · Mon–Fri'},
+  pm530:{cls:'pm',col:'#4a2060',label:'5:30 PM · Mon–Fri'},
+  sat630:{cls:'sat',col:'#1a4a2a',label:'6:30 AM · Saturday'}
 };
 const MC=['#1a3a5c','#4a2060','#1a4a2a','#5a3010','#6a1a40','#1a4a4a','#3a1a5c','#4a3010','#1a3a3a','#5a1a30'];
 const MB=['#e8f0f8','#f0e8f8','#e8f5ec','#f8f0e0','#f8e8f0','#e0f8f8','#eee8f8','#f8f0e0','#e0f5f5','#f5e0e8'];
 
-let me=null,myGroup=null,calMonth=new Date().getMonth(),calYear=new Date().getFullYear();
+let me=null,myGroup=null,remoteData={groups:{}};
+let calMonth=new Date().getMonth(),calYear=new Date().getFullYear();
+let saveTimer=null,pollTimer=null;
 
-function ld(){try{return JSON.parse(localStorage.getItem('squad_v6')||'{}');}catch(e){return{};}}
-function sd(d){try{localStorage.setItem('squad_v6',JSON.stringify(d));}catch(e){}}
+async function fetchData(){
+  const r=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':'false'}});
+  if(!r.ok) throw new Error('Fetch failed');
+  return await r.json();
+}
+async function pushData(data){
+  const r=await fetch(BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(data)});
+  if(!r.ok) throw new Error('Push failed');
+}
+function setSync(msg,cls){
+  const el=document.getElementById('sync-status');
+  if(!el) return;
+  el.innerHTML=`<span class="sync-dot ${cls}"></span>${msg}`;
+}
+function scheduleSave(){
+  if(saveTimer) clearTimeout(saveTimer);
+  setSync('Saving…','saving');
+  saveTimer=setTimeout(async()=>{
+    try{await pushData(remoteData);setSync('Saved','saved');setTimeout(()=>setSync('',''),3000);}
+    catch(e){setSync('Save failed','error');}
+  },800);
+}
+async function pollUpdates(){
+  try{
+    const fresh=await fetchData();
+    const before=JSON.stringify((remoteData.groups||{})[myGroup]||{});
+    remoteData=fresh;
+    if(!remoteData.groups) remoteData.groups={};
+    const after=JSON.stringify((remoteData.groups||{})[myGroup]||{});
+    if(before!==after) refreshTab();
+  }catch(e){}
+}
+function startPolling(){pollTimer=setInterval(pollUpdates,10000);}
+function stopPolling(){if(pollTimer) clearInterval(pollTimer);}
 
 function showPanel(id){
   ['auth-choose','auth-join','auth-create','auth-created'].forEach(p=>{
     document.getElementById(p).style.display=p===id?'block':'none';
   });
 }
-
-function doCreate(){
+async function doCreate(){
   const name=document.getElementById('create-name').value.trim();
-  const group=document.getElementById('create-group').value.trim();
+  const grpName=document.getElementById('create-group-name').value.trim();
   const code=document.getElementById('create-code').value.trim().toUpperCase();
   const err=document.getElementById('create-err');
-  if(!name||!group||!code){err.textContent='Please fill in all fields.';err.style.display='block';return;}
+  const btn=document.getElementById('create-btn');
+  if(!name||!grpName||!code){err.textContent='Please fill in all fields.';err.style.display='block';return;}
   if(code.length<3){err.textContent='Code must be at least 3 characters.';err.style.display='block';return;}
-  const data=ld();
-  if(data.groups&&data.groups[code]){err.textContent='That code is taken — try another.';err.style.display='block';return;}
-  if(!data.groups) data.groups={};
-  data.groups[code]={name:group,members:[name],chat:[],attendance:{},hist:{}};
-  sd(data);
-  me=name;myGroup=code;
-  document.getElementById('created-code-display').textContent=code;
-  showPanel('auth-created');
+  btn.disabled=true;btn.textContent='Creating…';err.style.display='none';
+  try{
+    remoteData=await fetchData();
+    if(!remoteData.groups) remoteData.groups={};
+    if(remoteData.groups[code]){err.textContent='That code is taken — try another.';err.style.display='block';btn.disabled=false;btn.textContent='Create group';return;}
+    remoteData.groups[code]={name:grpName,members:[name],chat:[],attendance:{},hist:{}};
+    await pushData(remoteData);
+    me=name;myGroup=code;
+    document.getElementById('created-code-display').textContent=code;
+    showPanel('auth-created');
+  }catch(e){err.textContent='Connection error. Please try again.';err.style.display='block';}
+  btn.disabled=false;btn.textContent='Create group';
 }
-
-function doJoin(){
+async function doJoin(){
   const code=document.getElementById('join-code').value.trim().toUpperCase();
   const name=document.getElementById('join-name').value.trim();
   const err=document.getElementById('join-err');
+  const btn=document.getElementById('join-btn');
   if(!code||!name){err.textContent='Please fill in all fields.';err.style.display='block';return;}
-  const data=ld();
-  if(!data.groups||!data.groups[code]){err.textContent='Group not found. Check the invite code.';err.style.display='block';return;}
-  if(!data.groups[code].members.includes(name)) data.groups[code].members.push(name);
-  sd(data);
-  me=name;myGroup=code;
-  enterApp();
+  btn.disabled=true;btn.textContent='Joining…';err.style.display='none';
+  try{
+    remoteData=await fetchData();
+    if(!remoteData.groups) remoteData.groups={};
+    if(!remoteData.groups[code]){err.textContent='Group not found. Check the invite code.';err.style.display='block';btn.disabled=false;btn.textContent='Join';return;}
+    if(!remoteData.groups[code].members) remoteData.groups[code].members=[];
+    if(!remoteData.groups[code].members.includes(name)){
+      remoteData.groups[code].members.push(name);
+      await pushData(remoteData);
+    }
+    me=name;myGroup=code;
+    enterApp();
+  }catch(e){err.textContent='Connection error. Please try again.';err.style.display='block';}
+  btn.disabled=false;btn.textContent='Join';
 }
-
 function enterApp(){
   document.getElementById('view-auth').style.display='none';
   document.getElementById('view-app').style.display='block';
   initApp();
 }
-
 function signOut(){
   if(!confirm('Sign out?')) return;
-  me=null;myGroup=null;
+  stopPolling();me=null;myGroup=null;
   document.getElementById('view-app').style.display='none';
   document.getElementById('view-auth').style.display='block';
   showPanel('auth-choose');
 }
-
-function initials(n){return n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();}
-function mCol(name){
-  const g=getG();const idx=g?((g.members.indexOf(name)+MC.length)%MC.length):0;
-  return{c:MC[idx],bg:MB[idx]};
-}
-function getG(){const d=ld();return d.groups&&d.groups[myGroup]?d.groups[myGroup]:null;}
-function dk(d){return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
-function todayKey(){return dk(new Date());}
-function sessForDow(dow){if(dow>=1&&dow<=5)return['am525','pm530'];if(dow===6)return['sat630'];return[];}
-function weekDates(){
-  const t=new Date();const m=new Date(t);
-  m.setDate(t.getDate()-((t.getDay()+6)%7));
-  return Array.from({length:7},(_,i)=>{const d=new Date(m);d.setDate(m.getDate()+i);return d;});
-}
-function getAtt(datekey,sess){const g=getG();return((g&&g.attendance&&g.attendance[datekey])||{})[sess]||{};}
-function setAtt(datekey,sess,name,val){
-  const data=ld();const g=data.groups[myGroup];
-  if(!g.attendance) g.attendance={};
-  if(!g.attendance[datekey]) g.attendance[datekey]={};
-  if(!g.attendance[datekey][sess]) g.attendance[datekey][sess]={};
-  g.attendance[datekey][sess][name]=val;
-  if(val==='yes'){if(!g.hist) g.hist={};if(!g.hist[datekey]) g.hist[datekey]={};g.hist[datekey][sess]=true;}
-  sd(data);
-}
-
 function initApp(){
   const g=getG();
   document.getElementById('top-group').textContent=g?g.name:'Squad';
@@ -392,69 +389,90 @@ function initApp(){
   const col=mCol(me);
   const av=document.getElementById('top-av');
   av.textContent=initials(me);av.style.background=col.bg;av.style.color=col.c;
-  renderToday();renderWeekPlan();renderCalendar();renderChat();renderStats();
+  renderToday();renderCalendar();renderStats();
+  startPolling();
+}
+function refreshTab(){
+  const a=document.querySelector('.screen.active');if(!a) return;
+  const id=a.id;
+  if(id==='tab-today') renderToday();
+  else if(id==='tab-week') renderWeekPlan();
+  else if(id==='tab-calendar') renderCalendar();
+  else if(id==='tab-chat') renderChat();
+  else if(id==='tab-stats') renderStats();
+}
+function initials(n){return n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();}
+function mCol(name){
+  const g=getG();const members=(g&&g.members)||[];
+  const idx=(members.indexOf(name)+MC.length)%MC.length;
+  return{c:MC[idx],bg:MB[idx]};
+}
+function getG(){return remoteData.groups&&remoteData.groups[myGroup]?remoteData.groups[myGroup]:null;}
+function dk(d){return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function todayKey(){return dk(new Date());}
+function sessForDow(dow){if(dow>=1&&dow<=5)return['am525','pm530'];if(dow===6)return['sat630'];return[];}
+function weekDates(){
+  const t=new Date();const m=new Date(t);m.setDate(t.getDate()-((t.getDay()+6)%7));
+  return Array.from({length:7},(_,i)=>{const d=new Date(m);d.setDate(m.getDate()+i);return d;});
+}
+function getAtt(datekey,sess){const g=getG();return((g&&g.attendance&&g.attendance[datekey])||{})[sess]||{};}
+function setAtt(datekey,sess,name,val){
+  const g=remoteData.groups[myGroup];
+  if(!g.attendance) g.attendance={};
+  if(!g.attendance[datekey]) g.attendance[datekey]={};
+  if(!g.attendance[datekey][sess]) g.attendance[datekey][sess]={};
+  g.attendance[datekey][sess][name]=val;
+  if(val==='yes'){if(!g.hist) g.hist={};if(!g.hist[datekey]) g.hist[datekey]={};g.hist[datekey][sess]=true;}
+  scheduleSave();
 }
 
 function renderToday(){
   const dow=new Date().getDay();const tk=todayKey();
   const sessions=sessForDow(dow);
   const cont=document.getElementById('today-sessions');cont.innerHTML='';
-  if(!sessions.length){
-    cont.innerHTML='<div class="card" style="text-align:center;color:var(--muted);padding:1.5rem;">No sessions today — enjoy the rest!</div>';
-    renderRoster([],tk);return;
-  }
+  if(!sessions.length){cont.innerHTML='<div class="card" style="text-align:center;color:var(--muted);padding:1.5rem;">No sessions today — enjoy the rest!</div>';renderRoster([],tk);return;}
   sessions.forEach(s=>cont.appendChild(buildSessCard(s,tk)));
   renderRoster(sessions,tk);
 }
-
 function buildSessCard(sess,datekey){
-  const sc=SESS[sess];
-  const att=getAtt(datekey,sess);
+  const sc=SESS[sess];const att=getAtt(datekey,sess);
   const yesNames=Object.entries(att).filter(([,v])=>v==='yes').map(([n])=>n);
   const myVal=att[me]||'';
-  const div=document.createElement('div');
-  div.className=`session-card ${sc.cls}`;
+  const div=document.createElement('div');div.className=`session-card ${sc.cls}`;
   div.innerHTML=`<div class="session-label ${sc.cls}">${sc.label}</div>
   <div class="session-row">
     <div style="display:flex;align-items:center;gap:8px;">
-      <div class="attendee-stack" id="stk-${sess}-${datekey}"></div>
-      <div class="att-count" id="cnt-${sess}-${datekey}"></div>
+      <div class="attendee-stack" id="stk-${sess}"></div>
+      <div class="att-count" id="cnt-${sess}"></div>
     </div>
     <div class="tog-wrap">
-      <button class="tog${myVal==='yes'?' yes':''}" id="ty-${sess}-${datekey}" onclick="tapTog('${sess}','${datekey}','yes')">Yes</button>
-      <button class="tog${myVal==='no'?' no':''}" id="tn-${sess}-${datekey}" onclick="tapTog('${sess}','${datekey}','no')">No</button>
+      <button class="tog${myVal==='yes'?' yes':''}" id="ty-${sess}" onclick="tapTog('${sess}','${datekey}','yes')">Yes</button>
+      <button class="tog${myVal==='no'?' no':''}" id="tn-${sess}" onclick="tapTog('${sess}','${datekey}','no')">No</button>
     </div>
   </div>`;
-  updateStack(sess,datekey,yesNames);
+  setTimeout(()=>updateStack(sess,yesNames),0);
   return div;
 }
-
-function updateStack(sess,datekey,yesNames){
-  const stk=document.getElementById(`stk-${sess}-${datekey}`);
-  const cnt=document.getElementById(`cnt-${sess}-${datekey}`);
+function updateStack(sess,yesNames){
+  const stk=document.getElementById(`stk-${sess}`);
+  const cnt=document.getElementById(`cnt-${sess}`);
   if(!stk||!cnt) return;
   stk.innerHTML='';
-  yesNames.slice(0,5).forEach(n=>{
-    const col=mCol(n);const av=document.createElement('div');
-    av.className='av';av.style.cssText=`background:${col.bg};color:${col.c};`;av.textContent=initials(n);stk.appendChild(av);
-  });
+  yesNames.slice(0,5).forEach(n=>{const col=mCol(n);const av=document.createElement('div');av.className='av';av.style.cssText=`background:${col.bg};color:${col.c};`;av.textContent=initials(n);stk.appendChild(av);});
   cnt.textContent=yesNames.length===0?'No one yet':`${yesNames.length} swimmer${yesNames.length!==1?'s':''}`;
 }
-
 function tapTog(sess,datekey,val){
   setAtt(datekey,sess,me,val);
   const att=getAtt(datekey,sess);
   const yesNames=Object.entries(att).filter(([,v])=>v==='yes').map(([n])=>n);
-  updateStack(sess,datekey,yesNames);
-  const yBtn=document.getElementById(`ty-${sess}-${datekey}`);
-  const nBtn=document.getElementById(`tn-${sess}-${datekey}`);
+  updateStack(sess,yesNames);
+  const yBtn=document.getElementById(`ty-${sess}`);const nBtn=document.getElementById(`tn-${sess}`);
   if(yBtn) yBtn.className='tog'+(val==='yes'?' yes':'');
   if(nBtn) nBtn.className='tog'+(val==='no'?' no':'');
   renderRoster(sessForDow(new Date().getDay()),todayKey());
   renderStats();
   if(document.getElementById('tab-week').classList.contains('active')) renderWeekPlan();
 }
-
 function renderRoster(sessions,tk){
   const g=getG();if(!g) return;
   const roster=document.getElementById('today-roster');roster.innerHTML='';
@@ -462,20 +480,10 @@ function renderRoster(sessions,tk){
   names.forEach(name=>{
     const col=mCol(name);
     const row=document.createElement('div');row.className='roster-row';
-    const av=document.createElement('div');av.className='avatar-sm';
-    av.style.cssText=`background:${col.bg};color:${col.c};width:30px;height:30px;font-size:11px;flex-shrink:0;`;
-    av.textContent=initials(name);
-    const nm=document.createElement('div');nm.className='r-name';
-    nm.style.fontWeight=name===me?'700':'400';
-    nm.textContent=name+(name===me?' (you)':'');
+    const av=document.createElement('div');av.className='avatar-sm';av.style.cssText=`background:${col.bg};color:${col.c};width:30px;height:30px;font-size:11px;flex-shrink:0;`;av.textContent=initials(name);
+    const nm=document.createElement('div');nm.className='r-name';nm.style.fontWeight=name===me?'700':'400';nm.textContent=name+(name===me?' (you)':'');
     const pills=document.createElement('div');pills.className='r-pills';
-    sessions.forEach(s=>{
-      const att=getAtt(tk,s);
-      if(att[name]==='yes'){
-        const p=document.createElement('span');p.className=`spill ${SESS[s].cls}`;
-        p.textContent=s==='am525'?'5:25am':s==='pm530'?'5:30pm':'6:30am';pills.appendChild(p);
-      }
-    });
+    sessions.forEach(s=>{const att=getAtt(tk,s);if(att[name]==='yes'){const p=document.createElement('span');p.className=`spill ${SESS[s].cls}`;p.textContent=s==='am525'?'5:25am':s==='pm530'?'5:30pm':'6:30am';pills.appendChild(p);}});
     if(!pills.children.length){const p=document.createElement('span');p.style.cssText='font-size:12px;color:var(--hint);';p.textContent='—';pills.appendChild(p);}
     row.appendChild(av);row.appendChild(nm);row.appendChild(pills);roster.appendChild(row);
   });
@@ -484,71 +492,55 @@ function renderRoster(sessions,tk){
 function renderWeekPlan(){
   const wdates=weekDates();const today=todayKey();
   const myTable=document.getElementById('week-table');
-  // My toggles
   let h=`<thead><tr><th>Session</th>`;
   wdates.forEach(d=>{const isT=dk(d)===today;h+=`<th style="${isT?'color:var(--frog);font-weight:700;':''}">${DAYS[d.getDay()]}<br><span style="font-weight:400;font-size:10px;">${d.getDate()}</span></th>`;});
   h+=`</tr></thead><tbody>`;
   ['am525','pm530','sat630'].forEach(sess=>{
-    const sc=SESS[sess];
-    h+=`<tr><td><span style="font-size:11px;font-weight:700;color:${sc.col};">${sess==='am525'?'5:25am':sess==='pm530'?'5:30pm':'6:30am'}</span></td>`;
+    const sc=SESS[sess];h+=`<tr><td><span style="font-size:11px;font-weight:700;color:${sc.col};">${sess==='am525'?'5:25am':sess==='pm530'?'5:30pm':'6:30am'}</span></td>`;
     wdates.forEach(d=>{
       const dow=d.getDay();const dkey=dk(d);const isT=dkey===today;
-      const hasSess=sessForDow(dow).includes(sess);
-      if(!hasSess){h+=`<td style="${isT?'background:#f8f7f4;':''}">&nbsp;</td>`;return;}
+      if(!sessForDow(dow).includes(sess)){h+=`<td style="${isT?'background:#f8f7f4;':''}">&nbsp;</td>`;return;}
       const att=getAtt(dkey,sess);const myVal=att[me]||'';
       const isPast=d<new Date(new Date().setHours(0,0,0,0));
       if(isPast&&myVal){
-        const cls=myVal==='yes'?SESS[sess].cls:'';
         const style=myVal==='no'?'background:var(--red-bg);color:var(--red);':'';
-        h+=`<td style="${isT?'background:#f8f7f4;':''}"><span class="spill ${cls}" style="${style}">${myVal==='yes'?'Yes':'No'}</span></td>`;
+        h+=`<td style="${isT?'background:#f8f7f4;':''}"><span class="spill ${myVal==='yes'?SESS[sess].cls:''}" style="${style}">${myVal==='yes'?'Yes':'No'}</span></td>`;
       } else {
-        h+=`<td style="${isT?'background:#f8f7f4;':''}">
-          <div style="display:flex;flex-direction:column;gap:3px;align-items:center;">
-            <button class="mini-tog${myVal==='yes'?' yes':''}" onclick="tapTog('${sess}','${dkey}','yes');renderWeekPlan();">Y</button>
-            <button class="mini-tog${myVal==='no'?' no':''}" onclick="tapTog('${sess}','${dkey}','no');renderWeekPlan();">N</button>
-          </div></td>`;
+        h+=`<td style="${isT?'background:#f8f7f4;':''}"><div style="display:flex;flex-direction:column;gap:3px;align-items:center;">
+          <button class="mini-tog${myVal==='yes'?' yes':''}" onclick="tapTog('${sess}','${dkey}','yes');renderWeekPlan();">Y</button>
+          <button class="mini-tog${myVal==='no'?' no':''}" onclick="tapTog('${sess}','${dkey}','no');renderWeekPlan();">N</button>
+        </div></td>`;
       }
     });
     h+=`</tr>`;
   });
   h+=`</tbody>`;myTable.innerHTML=h;
-
-  // Squad view
   const g=getG();if(!g) return;
   const names=[...new Set([...g.members,me])];
-  const squadTable=document.getElementById('squad-week-table');
+  const st=document.getElementById('squad-week-table');
   let sh=`<thead><tr><th>Member</th>`;
   wdates.forEach(d=>{const isT=dk(d)===today;sh+=`<th style="${isT?'color:var(--frog);font-weight:700;':''}">${DAYS[d.getDay()]}<br><span style="font-weight:400;font-size:10px;">${d.getDate()}</span></th>`;});
   sh+=`</tr></thead><tbody>`;
   names.forEach(name=>{
     const col=mCol(name);
     sh+=`<tr${name===me?'style="background:#fafaf8;"':''}>
-      <td><span style="display:inline-flex;align-items:center;gap:6px;">
-        <span style="width:7px;height:7px;border-radius:50%;background:${col.c};display:inline-block;flex-shrink:0;"></span>
-        ${name}${name===me?' <span style="font-size:10px;color:var(--muted);">(you)</span>':''}
-      </span></td>`;
+      <td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="width:7px;height:7px;border-radius:50%;background:${col.c};display:inline-block;flex-shrink:0;"></span>${name}${name===me?' <span style="font-size:10px;color:var(--muted);">(you)</span>':''}</span></td>`;
     wdates.forEach(d=>{
-      const dow=d.getDay();const dkey=dk(d);const isT=dkey===today;
-      const sessions=sessForDow(dow);let cells=[];
-      sessions.forEach(s=>{
-        const att=getAtt(dkey,s);
-        if(att[name]==='yes') cells.push(`<span class="spill ${SESS[s].cls}" style="font-size:9px;padding:1px 5px;">${s==='am525'?'AM':s==='pm530'?'PM':'SAT'}</span>`);
-      });
+      const dkey=dk(d);const isT=dkey===today;let cells=[];
+      sessForDow(d.getDay()).forEach(s=>{const att=getAtt(dkey,s);if(att[name]==='yes') cells.push(`<span class="spill ${SESS[s].cls}" style="font-size:9px;padding:1px 5px;">${s==='am525'?'AM':s==='pm530'?'PM':'SAT'}</span>`);});
       sh+=`<td style="${isT?'background:#f8f7f4;':''}">${cells.join('<br>')||'<span style="color:var(--hint);font-size:11px;">—</span>'}</td>`;
     });
     sh+=`</tr>`;
   });
-  sh+=`</tbody>`;squadTable.innerHTML=sh;
+  sh+=`</tbody>`;st.innerHTML=sh;
 }
 
 function renderCalendar(){
   const g=getG();const hist=(g&&g.hist)||{};
   document.getElementById('cal-month-label').textContent=`${MONTHS[calMonth]} ${calYear}`;
-  const hdrs=document.getElementById('cal-hdrs');
-  hdrs.innerHTML=['M','T','W','T','F','S','S'].map(d=>`<div style="text-align:center;font-size:10px;font-weight:700;color:var(--muted);">${d}</div>`).join('');
+  document.getElementById('cal-hdrs').innerHTML=['M','T','W','T','F','S','S'].map(d=>`<div style="text-align:center;font-size:10px;font-weight:700;color:var(--muted);">${d}</div>`).join('');
   const grid=document.getElementById('cal-grid');grid.innerHTML='';
-  const first=new Date(calYear,calMonth,1).getDay();
-  const offset=(first+6)%7;
+  const offset=(new Date(calYear,calMonth,1).getDay()+6)%7;
   const dim=new Date(calYear,calMonth+1,0).getDate();
   const today=new Date();
   for(let i=0;i<offset;i++){const e=document.createElement('div');e.className='cal-cell empty';grid.appendChild(e);}
@@ -574,24 +566,16 @@ function renderChat(){
     const div=document.createElement('div');div.className='msg'+(isMe?' mine':'');
     const meta=document.createElement('div');meta.className='msg-meta';meta.textContent=(isMe?'You':m.name)+' · '+m.time;
     const bubble=document.createElement('div');bubble.className='bubble '+(isMe?'mine':'them');bubble.textContent=m.text;
-    div.appendChild(meta);div.appendChild(bubble);
-    if(m.reactions&&m.reactions.length){
-      const rr=document.createElement('div');rr.className='react-row';
-      m.reactions.forEach(r=>{const b=document.createElement('div');b.className='react';b.textContent=r;rr.appendChild(b);});
-      div.appendChild(rr);
-    }
-    area.appendChild(div);
+    div.appendChild(meta);div.appendChild(bubble);area.appendChild(div);
   });
   area.scrollTop=area.scrollHeight;
 }
-
 function sendChat(){
   const input=document.getElementById('chat-input');const text=input.value.trim();if(!text)return;
-  const data=ld();const g=data.groups[myGroup];if(!g.chat) g.chat=[];
+  const g=remoteData.groups[myGroup];if(!g.chat) g.chat=[];
   const now=new Date();const h=now.getHours();const mins=now.getMinutes();
-  const ampm=h>=12?'pm':'am';const hh=h%12||12;
-  g.chat.push({name:me,text,time:`${hh}:${String(mins).padStart(2,'0')} ${ampm}`});
-  sd(data);input.value='';renderChat();
+  g.chat.push({name:me,text,time:`${h%12||12}:${String(mins).padStart(2,'0')} ${h>=12?'pm':'am'}`});
+  scheduleSave();input.value='';renderChat();
 }
 
 function renderStats(){
@@ -599,35 +583,29 @@ function renderStats(){
   const today=new Date();let streak=0;
   for(let i=0;i<365;i++){
     const d=new Date(today);d.setDate(today.getDate()-i);
-    const dkey=dk(d);const swam=Object.values(hist[dkey]||{}).some(Boolean);
-    if(swam) streak++;else if(i>0) break;
+    if(Object.values(hist[dk(d)]||{}).some(Boolean)) streak++;else if(i>0) break;
   }
   let mc=0,yc=0;
   for(let i=0;i<365;i++){
     const d=new Date(today);d.setDate(today.getDate()-i);
-    const dkey=dk(d);const c=Object.values(hist[dkey]||{}).filter(Boolean).length;
-    yc+=c;if(d.getMonth()===today.getMonth()&&d.getFullYear()===today.getFullYear()) mc+=c;
+    const c=Object.values(hist[dk(d)]||{}).filter(Boolean).length;yc+=c;
+    if(d.getMonth()===today.getMonth()&&d.getFullYear()===today.getFullYear()) mc+=c;
   }
   document.getElementById('stat-streak').textContent=streak;
   document.getElementById('stat-month').textContent=mc;
   document.getElementById('stat-year').textContent=`${yc} this year`;
   const dots=document.getElementById('sdots');dots.innerHTML='';
   for(let i=0;i<7;i++){const d=document.createElement('div');d.className='sdot'+(i<streak%7?' on':'');dots.appendChild(d);}
-
   const names=[...new Set([...(g?g.members:[]),me])];
   const sq=document.getElementById('squad-stats');sq.innerHTML='';
   const tk=todayKey();const sessions=sessForDow(new Date().getDay());
   names.forEach(name=>{
     const col=mCol(name);
     const row=document.createElement('div');row.style.cssText='display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);';
-    const av=document.createElement('div');av.className='avatar-sm';
-    av.style.cssText=`background:${col.bg};color:${col.c};width:28px;height:28px;font-size:10px;`;av.textContent=initials(name);
+    const av=document.createElement('div');av.className='avatar-sm';av.style.cssText=`background:${col.bg};color:${col.c};width:28px;height:28px;font-size:10px;`;av.textContent=initials(name);
     const nm=document.createElement('div');nm.style.cssText='flex:1;font-size:13px;'+(name===me?'font-weight:700;':'');nm.textContent=name;
     const pips=document.createElement('div');pips.style.cssText='display:flex;gap:4px;';
-    sessions.forEach(s=>{
-      const att=getAtt(tk,s);const p=document.createElement('div');
-      p.style.cssText=`width:9px;height:9px;border-radius:50%;background:${att[name]==='yes'?SESS[s].col:'var(--border)'};`;pips.appendChild(p);
-    });
+    sessions.forEach(s=>{const att=getAtt(tk,s);const p=document.createElement('div');p.style.cssText=`width:9px;height:9px;border-radius:50%;background:${att[name]==='yes'?SESS[s].col:'var(--border)'};`;pips.appendChild(p);});
     row.appendChild(av);row.appendChild(nm);row.appendChild(pips);sq.appendChild(row);
   });
   if(sq.lastChild) sq.lastChild.style.borderBottom='none';
@@ -638,17 +616,28 @@ function switchTab(tab,el){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(`tab-${tab}`).classList.add('active');
   if(tab==='week') renderWeekPlan();
-  if(tab==='calendar') renderCalendar();
-  if(tab==='chat') renderChat();
-  if(tab==='stats') renderStats();
+  else if(tab==='calendar') renderCalendar();
+  else if(tab==='chat') renderChat();
+  else if(tab==='stats') renderStats();
 }
 
-// Keyboard shortcuts
 document.getElementById('join-code').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('join-name').focus();});
 document.getElementById('join-name').addEventListener('keydown',e=>{if(e.key==='Enter')doJoin();});
-document.getElementById('create-name').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('create-group').focus();});
-document.getElementById('create-group').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('create-code').focus();});
+document.getElementById('create-name').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('create-group-name').focus();});
+document.getElementById('create-group-name').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('create-code').focus();});
 document.getElementById('create-code').addEventListener('keydown',e=>{if(e.key==='Enter')doCreate();});
+
+(async()=>{
+  try{
+    remoteData=await fetchData();
+    if(!remoteData.groups) remoteData.groups={};
+  }catch(e){
+    document.getElementById('loading-msg').textContent='Could not connect. Check your internet and reload.';
+    return;
+  }
+  document.getElementById('loading-overlay').style.display='none';
+  document.getElementById('view-auth').style.display='block';
+})();
 </script>
 </body>
 </html>
