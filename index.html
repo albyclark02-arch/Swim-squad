@@ -215,6 +215,11 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 @keyframes wave{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
 .wave-anim{animation:wave 8s linear infinite;}
 
+/* CHAT BADGE */
+.nav-chat-wrap{position:relative;display:inline-flex;align-items:center;justify-content:center;width:100%;}
+.chat-badge{position:absolute;top:-2px;right:calc(50% - 28px);background:#e8001a;color:white;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--card);animation:pop .2s ease;}
+@keyframes pop{0%{transform:scale(0);}70%{transform:scale(1.2);}100%{transform:scale(1);}}
+
 /* TOAST */
 .toast{position:fixed;bottom:calc(5rem + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:#0066cc;color:white;padding:10px 20px;border-radius:99px;font-size:14px;font-weight:600;opacity:0;transition:all .3s;z-index:200;white-space:nowrap;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -361,7 +366,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     <button class="nav-btn active" onclick="switchTab('today',this)">🌅 Today</button>
     <button class="nav-btn" onclick="switchTab('week',this)">📅 Week</button>
     <button class="nav-btn" onclick="switchTab('calendar',this)">🗓 History</button>
-    <button class="nav-btn" onclick="switchTab('chat',this)">💬 Chat</button>
+    <button class="nav-btn" id="nav-chat-btn" onclick="switchTab('chat',this)"><div class="nav-chat-wrap">💬 Chat<span class="chat-badge" id="chat-badge" style="display:none;">0</span></div></button>
     <button class="nav-btn" onclick="switchTab('stats',this)">🏆 Stats</button>
   </div>
 
@@ -529,7 +534,11 @@ async function pollUpdates(){
     const fresh=await loadGroup(myGroup);
     if(!fresh) return;
     const before=JSON.stringify(groupData);
+    const beforeChatLen=(groupData&&groupData.chat)||[];
     groupData=fresh;
+    const afterChatLen=(groupData&&groupData.chat)||[];
+    // Always update badge when chat grows
+    if(afterChatLen.length>beforeChatLen.length) updateChatBadge();
     if(JSON.stringify(groupData)!==before) refreshTab();
   }catch(e){}
 }
@@ -647,6 +656,7 @@ function initApp(){
   const av=document.getElementById('top-av');
   av.textContent=initials(me);av.style.background=col.bg;av.style.color=col.c;
   renderToday();renderCalendar();renderStats();
+  updateChatBadge();
   startPolling();
 }
 function refreshTab(){
@@ -830,6 +840,22 @@ function renderCalendar(){
 function calNav(dir){calMonth+=dir;if(calMonth<0){calMonth=11;calYear--;}if(calMonth>11){calMonth=0;calYear++;}renderCalendar();}
 
 // ── Chat ──────────────────────────────────────────────────────
+function getLastSeen(){
+  try{return parseInt(localStorage.getItem('squad_chat_seen_'+myGroup)||'0');}catch(e){return 0;}
+}
+function setLastSeen(n){
+  try{localStorage.setItem('squad_chat_seen_'+myGroup,String(n));}catch(e){}
+}
+function updateChatBadge(){
+  const msgs=(groupData&&groupData.chat)||[];
+  const lastSeen=getLastSeen();
+  // Count messages from others that we haven't seen
+  const unread=msgs.filter((m,i)=>i>=lastSeen&&m.name!==me).length;
+  const badge=document.getElementById('chat-badge');
+  if(!badge) return;
+  if(unread>0){badge.textContent=unread>99?'99+':unread;badge.style.display='flex';}
+  else badge.style.display='none';
+}
 function renderChat(){
   const msgs=(groupData&&groupData.chat)||[];
   const area=document.getElementById('chat-area');area.innerHTML='';
@@ -841,6 +867,9 @@ function renderChat(){
     div.appendChild(meta);div.appendChild(bubble);area.appendChild(div);
   });
   area.scrollTop=area.scrollHeight;
+  // Mark all as seen
+  setLastSeen(msgs.length);
+  updateChatBadge();
 }
 function sendChat(){
   const input=document.getElementById('chat-input');const text=input.value.trim();if(!text)return;
@@ -926,7 +955,7 @@ function switchTab(tab,el){
   document.getElementById(`tab-${tab}`).classList.add('active');
   if(tab==='week') renderWeekPlan();
   else if(tab==='calendar') renderCalendar();
-  else if(tab==='chat') renderChat();
+  else if(tab==='chat') renderChat();  // renderChat clears badge
   else if(tab==='stats') renderStats();
 }
 
