@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
@@ -103,10 +104,10 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .btn-sec:hover{background:var(--bg);}
 .err{font-size:13px;color:var(--red);margin-bottom:8px;}
 .code-display{font-family:var(--mono);font-size:22px;font-weight:700;letter-spacing:4px;text-align:center;background:var(--bg);border-radius:10px;padding:14px;margin:10px 0;color:var(--am);}
-.loading-overlay{position:fixed;inset:0;background:rgba(245,244,240,0.92);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;gap:12px;}
+.loading-overlay{position:fixed;inset:0;background:rgba(245,244,240,0.95);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;gap:12px;}
 .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--frog);border-radius:50%;animation:spin .7s linear infinite;}
 @keyframes spin{to{transform:rotate(360deg);}}
-.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--border);display:inline-block;margin-right:5px;}
+.sync-dot{width:7px;height:7px;border-radius:50%;background:var(--border);display:inline-block;margin-right:5px;vertical-align:middle;}
 .sync-dot.saving{background:var(--streak);}
 .sync-dot.saved{background:var(--yes);}
 .sync-dot.error{background:var(--red);}
@@ -117,7 +118,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
 <div class="loading-overlay" id="loading-overlay">
   <div class="spinner"></div>
-  <div style="font-size:14px;color:var(--muted);" id="loading-msg">Connecting to server…</div>
+  <div style="font-size:14px;color:var(--muted);" id="loading-msg">Connecting…</div>
 </div>
 
 <div id="view-auth" style="display:none;">
@@ -178,7 +179,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     <div style="display:flex;align-items:center;gap:8px;">
       <div style="text-align:right;">
         <div style="font-size:13px;font-weight:600;" id="top-name"></div>
-        <div style="font-size:11px;color:var(--muted);display:flex;align-items:center;justify-content:flex-end;" id="sync-status"></div>
+        <div style="font-size:11px;display:flex;align-items:center;justify-content:flex-end;" id="sync-status"></div>
       </div>
       <div class="avatar-sm" id="top-av" title="Tap to sign out" onclick="signOut()"></div>
     </div>
@@ -268,9 +269,11 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 </div>
 
 <script>
-const BIN_ID  = '69e2fdd3856a68218947a034';
-const API_KEY = '$2a$10$4HvE90ibkzV7iR7U53DRH.XMgq29fuTyxrYwty9CoAp.SBKWodmMO';
-const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+// ── Supabase config ─────────────────────────────────────────
+const SUPA_URL = 'https://lurokubnouxgchcxwjfa.supabase.co';
+const SUPA_KEY = 'sb_publishable_lws5dJbV7kJYSfHmf_fPMg_rovfPe74';
+const sb = supabase.createClient(SUPA_URL, SUPA_KEY);
+// ────────────────────────────────────────────────────────────
 
 const DAYS=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
 const MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
@@ -282,50 +285,58 @@ const SESS={
 const MC=['#1a3a5c','#4a2060','#1a4a2a','#5a3010','#6a1a40','#1a4a4a','#3a1a5c','#4a3010','#1a3a3a','#5a1a30'];
 const MB=['#e8f0f8','#f0e8f8','#e8f5ec','#f8f0e0','#f8e8f0','#e0f8f8','#eee8f8','#f8f0e0','#e0f5f5','#f5e0e8'];
 
-let me=null,myGroup=null,remoteData={groups:{}};
-let calMonth=new Date().getMonth(),calYear=new Date().getFullYear();
-let saveTimer=null,pollTimer=null;
+let me=null, myGroup=null, groupData=null;
+let calMonth=new Date().getMonth(), calYear=new Date().getFullYear();
+let saveTimer=null, pollTimer=null;
 
-async function fetchData(){
-  const r=await fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':API_KEY,'X-Bin-Meta':'false'}});
-  if(!r.ok) throw new Error('Fetch failed');
-  return await r.json();
+// ── Supabase helpers ─────────────────────────────────────────
+async function loadGroup(code){
+  const {data,error}=await sb.from('squads').select('data').eq('id',code).single();
+  if(error) return null;
+  return data.data;
 }
-async function pushData(data){
-  const r=await fetch(BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':API_KEY},body:JSON.stringify(data)});
-  if(!r.ok) throw new Error('Push failed');
+async function saveGroup(code,data){
+  const {error}=await sb.from('squads').upsert({id:code,data,updated_at:new Date().toISOString()});
+  return !error;
 }
+async function groupExists(code){
+  const {data}=await sb.from('squads').select('id').eq('id',code).single();
+  return !!data;
+}
+
 function setSync(msg,cls){
   const el=document.getElementById('sync-status');
   if(!el) return;
-  el.innerHTML=`<span class="sync-dot ${cls}"></span>${msg}`;
+  el.innerHTML=msg?`<span class="sync-dot ${cls}"></span>${msg}`:'';
 }
 function scheduleSave(){
   if(saveTimer) clearTimeout(saveTimer);
   setSync('Saving…','saving');
   saveTimer=setTimeout(async()=>{
-    try{await pushData(remoteData);setSync('Saved','saved');setTimeout(()=>setSync('',''),3000);}
-    catch(e){setSync('Save failed','error');}
+    const ok=await saveGroup(myGroup,groupData);
+    if(ok){setSync('Saved','saved');setTimeout(()=>setSync('',''),3000);}
+    else setSync('Save failed','error');
   },800);
 }
 async function pollUpdates(){
   try{
-    const fresh=await fetchData();
-    const before=JSON.stringify((remoteData.groups||{})[myGroup]||{});
-    remoteData=fresh;
-    if(!remoteData.groups) remoteData.groups={};
-    const after=JSON.stringify((remoteData.groups||{})[myGroup]||{});
-    if(before!==after) refreshTab();
+    const fresh=await loadGroup(myGroup);
+    if(!fresh) return;
+    const before=JSON.stringify(groupData);
+    groupData=fresh;
+    if(JSON.stringify(groupData)!==before) refreshTab();
   }catch(e){}
 }
-function startPolling(){pollTimer=setInterval(pollUpdates,10000);}
+function startPolling(){pollTimer=setInterval(pollUpdates,8000);}
 function stopPolling(){if(pollTimer) clearInterval(pollTimer);}
 
+// ── Auth ─────────────────────────────────────────────────────
 function showPanel(id){
   ['auth-choose','auth-join','auth-create','auth-created'].forEach(p=>{
     document.getElementById(p).style.display=p===id?'block':'none';
   });
 }
+
 async function doCreate(){
   const name=document.getElementById('create-name').value.trim();
   const grpName=document.getElementById('create-group-name').value.trim();
@@ -336,17 +347,18 @@ async function doCreate(){
   if(code.length<3){err.textContent='Code must be at least 3 characters.';err.style.display='block';return;}
   btn.disabled=true;btn.textContent='Creating…';err.style.display='none';
   try{
-    remoteData=await fetchData();
-    if(!remoteData.groups) remoteData.groups={};
-    if(remoteData.groups[code]){err.textContent='That code is taken — try another.';err.style.display='block';btn.disabled=false;btn.textContent='Create group';return;}
-    remoteData.groups[code]={name:grpName,members:[name],chat:[],attendance:{},hist:{}};
-    await pushData(remoteData);
-    me=name;myGroup=code;
+    const exists=await groupExists(code);
+    if(exists){err.textContent='That code is taken — try another.';err.style.display='block';btn.disabled=false;btn.textContent='Create group';return;}
+    const newGroup={name:grpName,members:[name],chat:[],attendance:{},hist:{}};
+    const ok=await saveGroup(code,newGroup);
+    if(!ok) throw new Error('Save failed');
+    groupData=newGroup;me=name;myGroup=code;
     document.getElementById('created-code-display').textContent=code;
     showPanel('auth-created');
   }catch(e){err.textContent='Connection error. Please try again.';err.style.display='block';}
   btn.disabled=false;btn.textContent='Create group';
 }
+
 async function doJoin(){
   const code=document.getElementById('join-code').value.trim().toUpperCase();
   const name=document.getElementById('join-name').value.trim();
@@ -355,19 +367,19 @@ async function doJoin(){
   if(!code||!name){err.textContent='Please fill in all fields.';err.style.display='block';return;}
   btn.disabled=true;btn.textContent='Joining…';err.style.display='none';
   try{
-    remoteData=await fetchData();
-    if(!remoteData.groups) remoteData.groups={};
-    if(!remoteData.groups[code]){err.textContent='Group not found. Check the invite code.';err.style.display='block';btn.disabled=false;btn.textContent='Join';return;}
-    if(!remoteData.groups[code].members) remoteData.groups[code].members=[];
-    if(!remoteData.groups[code].members.includes(name)){
-      remoteData.groups[code].members.push(name);
-      await pushData(remoteData);
+    const data=await loadGroup(code);
+    if(!data){err.textContent='Group not found. Check the invite code.';err.style.display='block';btn.disabled=false;btn.textContent='Join';return;}
+    if(!data.members) data.members=[];
+    if(!data.members.includes(name)){
+      data.members.push(name);
+      await saveGroup(code,data);
     }
-    me=name;myGroup=code;
+    groupData=data;me=name;myGroup=code;
     enterApp();
   }catch(e){err.textContent='Connection error. Please try again.';err.style.display='block';}
   btn.disabled=false;btn.textContent='Join';
 }
+
 function enterApp(){
   document.getElementById('view-auth').style.display='none';
   document.getElementById('view-app').style.display='block';
@@ -375,14 +387,15 @@ function enterApp(){
 }
 function signOut(){
   if(!confirm('Sign out?')) return;
-  stopPolling();me=null;myGroup=null;
+  stopPolling();me=null;myGroup=null;groupData=null;
   document.getElementById('view-app').style.display='none';
   document.getElementById('view-auth').style.display='block';
   showPanel('auth-choose');
 }
+
+// ── App ───────────────────────────────────────────────────────
 function initApp(){
-  const g=getG();
-  document.getElementById('top-group').textContent=g?g.name:'Squad';
+  document.getElementById('top-group').textContent=groupData.name||'Squad';
   document.getElementById('top-date').textContent=new Date().toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long'});
   document.getElementById('top-name').textContent=me;
   document.getElementById('group-invite-display').textContent=myGroup;
@@ -401,13 +414,14 @@ function refreshTab(){
   else if(id==='tab-chat') renderChat();
   else if(id==='tab-stats') renderStats();
 }
+
+// ── Helpers ───────────────────────────────────────────────────
 function initials(n){return n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();}
 function mCol(name){
-  const g=getG();const members=(g&&g.members)||[];
+  const members=(groupData&&groupData.members)||[];
   const idx=(members.indexOf(name)+MC.length)%MC.length;
   return{c:MC[idx],bg:MB[idx]};
 }
-function getG(){return remoteData.groups&&remoteData.groups[myGroup]?remoteData.groups[myGroup]:null;}
 function dk(d){return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function todayKey(){return dk(new Date());}
 function sessForDow(dow){if(dow>=1&&dow<=5)return['am525','pm530'];if(dow===6)return['sat630'];return[];}
@@ -415,17 +429,17 @@ function weekDates(){
   const t=new Date();const m=new Date(t);m.setDate(t.getDate()-((t.getDay()+6)%7));
   return Array.from({length:7},(_,i)=>{const d=new Date(m);d.setDate(m.getDate()+i);return d;});
 }
-function getAtt(datekey,sess){const g=getG();return((g&&g.attendance&&g.attendance[datekey])||{})[sess]||{};}
+function getAtt(datekey,sess){return((groupData.attendance||{})[datekey]||{})[sess]||{};}
 function setAtt(datekey,sess,name,val){
-  const g=remoteData.groups[myGroup];
-  if(!g.attendance) g.attendance={};
-  if(!g.attendance[datekey]) g.attendance[datekey]={};
-  if(!g.attendance[datekey][sess]) g.attendance[datekey][sess]={};
-  g.attendance[datekey][sess][name]=val;
-  if(val==='yes'){if(!g.hist) g.hist={};if(!g.hist[datekey]) g.hist[datekey]={};g.hist[datekey][sess]=true;}
+  if(!groupData.attendance) groupData.attendance={};
+  if(!groupData.attendance[datekey]) groupData.attendance[datekey]={};
+  if(!groupData.attendance[datekey][sess]) groupData.attendance[datekey][sess]={};
+  groupData.attendance[datekey][sess][name]=val;
+  if(val==='yes'){if(!groupData.hist) groupData.hist={};if(!groupData.hist[datekey]) groupData.hist[datekey]={};groupData.hist[datekey][sess]=true;}
   scheduleSave();
 }
 
+// ── Today ─────────────────────────────────────────────────────
 function renderToday(){
   const dow=new Date().getDay();const tk=todayKey();
   const sessions=sessForDow(dow);
@@ -464,8 +478,7 @@ function updateStack(sess,yesNames){
 function tapTog(sess,datekey,val){
   setAtt(datekey,sess,me,val);
   const att=getAtt(datekey,sess);
-  const yesNames=Object.entries(att).filter(([,v])=>v==='yes').map(([n])=>n);
-  updateStack(sess,yesNames);
+  updateStack(sess,Object.entries(att).filter(([,v])=>v==='yes').map(([n])=>n));
   const yBtn=document.getElementById(`ty-${sess}`);const nBtn=document.getElementById(`tn-${sess}`);
   if(yBtn) yBtn.className='tog'+(val==='yes'?' yes':'');
   if(nBtn) nBtn.className='tog'+(val==='no'?' no':'');
@@ -474,9 +487,8 @@ function tapTog(sess,datekey,val){
   if(document.getElementById('tab-week').classList.contains('active')) renderWeekPlan();
 }
 function renderRoster(sessions,tk){
-  const g=getG();if(!g) return;
   const roster=document.getElementById('today-roster');roster.innerHTML='';
-  const names=[...new Set([...g.members,me])];
+  const names=[...new Set([...(groupData.members||[]),me])];
   names.forEach(name=>{
     const col=mCol(name);
     const row=document.createElement('div');row.className='roster-row';
@@ -489,6 +501,7 @@ function renderRoster(sessions,tk){
   });
 }
 
+// ── Week plan ─────────────────────────────────────────────────
 function renderWeekPlan(){
   const wdates=weekDates();const today=todayKey();
   const myTable=document.getElementById('week-table');
@@ -515,8 +528,8 @@ function renderWeekPlan(){
     h+=`</tr>`;
   });
   h+=`</tbody>`;myTable.innerHTML=h;
-  const g=getG();if(!g) return;
-  const names=[...new Set([...g.members,me])];
+
+  const names=[...new Set([...(groupData.members||[]),me])];
   const st=document.getElementById('squad-week-table');
   let sh=`<thead><tr><th>Member</th>`;
   wdates.forEach(d=>{const isT=dk(d)===today;sh+=`<th style="${isT?'color:var(--frog);font-weight:700;':''}">${DAYS[d.getDay()]}<br><span style="font-weight:400;font-size:10px;">${d.getDate()}</span></th>`;});
@@ -535,8 +548,9 @@ function renderWeekPlan(){
   sh+=`</tbody>`;st.innerHTML=sh;
 }
 
+// ── Calendar ──────────────────────────────────────────────────
 function renderCalendar(){
-  const g=getG();const hist=(g&&g.hist)||{};
+  const hist=(groupData&&groupData.hist)||{};
   document.getElementById('cal-month-label').textContent=`${MONTHS[calMonth]} ${calYear}`;
   document.getElementById('cal-hdrs').innerHTML=['M','T','W','T','F','S','S'].map(d=>`<div style="text-align:center;font-size:10px;font-weight:700;color:var(--muted);">${d}</div>`).join('');
   const grid=document.getElementById('cal-grid');grid.innerHTML='';
@@ -558,8 +572,9 @@ function renderCalendar(){
 }
 function calNav(dir){calMonth+=dir;if(calMonth<0){calMonth=11;calYear--;}if(calMonth>11){calMonth=0;calYear++;}renderCalendar();}
 
+// ── Chat ──────────────────────────────────────────────────────
 function renderChat(){
-  const g=getG();const msgs=(g&&g.chat)||[];
+  const msgs=(groupData&&groupData.chat)||[];
   const area=document.getElementById('chat-area');area.innerHTML='';
   msgs.forEach(m=>{
     const isMe=m.name===me;
@@ -572,14 +587,15 @@ function renderChat(){
 }
 function sendChat(){
   const input=document.getElementById('chat-input');const text=input.value.trim();if(!text)return;
-  const g=remoteData.groups[myGroup];if(!g.chat) g.chat=[];
+  if(!groupData.chat) groupData.chat=[];
   const now=new Date();const h=now.getHours();const mins=now.getMinutes();
-  g.chat.push({name:me,text,time:`${h%12||12}:${String(mins).padStart(2,'0')} ${h>=12?'pm':'am'}`});
+  groupData.chat.push({name:me,text,time:`${h%12||12}:${String(mins).padStart(2,'0')} ${h>=12?'pm':'am'}`});
   scheduleSave();input.value='';renderChat();
 }
 
+// ── Stats ─────────────────────────────────────────────────────
 function renderStats(){
-  const g=getG();const hist=(g&&g.hist)||{};
+  const hist=(groupData&&groupData.hist)||{};
   const today=new Date();let streak=0;
   for(let i=0;i<365;i++){
     const d=new Date(today);d.setDate(today.getDate()-i);
@@ -596,7 +612,7 @@ function renderStats(){
   document.getElementById('stat-year').textContent=`${yc} this year`;
   const dots=document.getElementById('sdots');dots.innerHTML='';
   for(let i=0;i<7;i++){const d=document.createElement('div');d.className='sdot'+(i<streak%7?' on':'');dots.appendChild(d);}
-  const names=[...new Set([...(g?g.members:[]),me])];
+  const names=[...new Set([...(groupData.members||[]),me])];
   const sq=document.getElementById('squad-stats');sq.innerHTML='';
   const tk=todayKey();const sessions=sessForDow(new Date().getDay());
   names.forEach(name=>{
@@ -611,6 +627,7 @@ function renderStats(){
   if(sq.lastChild) sq.lastChild.style.borderBottom='none';
 }
 
+// ── Tabs ──────────────────────────────────────────────────────
 function switchTab(tab,el){
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -621,16 +638,19 @@ function switchTab(tab,el){
   else if(tab==='stats') renderStats();
 }
 
+// ── Keyboard ──────────────────────────────────────────────────
 document.getElementById('join-code').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('join-name').focus();});
 document.getElementById('join-name').addEventListener('keydown',e=>{if(e.key==='Enter')doJoin();});
 document.getElementById('create-name').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('create-group-name').focus();});
 document.getElementById('create-group-name').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('create-code').focus();});
 document.getElementById('create-code').addEventListener('keydown',e=>{if(e.key==='Enter')doCreate();});
 
+// ── Boot ──────────────────────────────────────────────────────
 (async()=>{
   try{
-    remoteData=await fetchData();
-    if(!remoteData.groups) remoteData.groups={};
+    // Just test the connection with a quick query
+    const {error}=await sb.from('squads').select('id').limit(1);
+    if(error) throw error;
   }catch(e){
     document.getElementById('loading-msg').textContent='Could not connect. Check your internet and reload.';
     return;
