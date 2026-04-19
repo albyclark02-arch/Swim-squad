@@ -13,13 +13,8 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 :root{
-  --bg:#f0f7ff;
-  --card:#ffffff;
-  --border:#cce0f5;
-  --border2:#99c4eb;
-  --text:#0a1628;
-  --muted:#4a6fa5;
-  --hint:#8ab0d4;
+  --bg:#f0f7ff;--card:#ffffff;--border:#cce0f5;--border2:#99c4eb;
+  --text:#0a1628;--muted:#4a6fa5;--hint:#8ab0d4;
   --am:#0066cc;--am-bg:#e0f0ff;--am-light:#f0f7ff;
   --pm:#0044aa;--pm-bg:#dceeff;--pm-light:#eef6ff;
   --sat:#00557a;--sat-bg:#d6f0fa;--sat-light:#eaf8ff;
@@ -41,58 +36,59 @@
 }
 html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;transition:background .3s,color .3s;}
 .app{max-width:700px;margin:0 auto;padding:0 0 5rem;}
-
-/* WAVE BG */
 .wave-bg{position:fixed;bottom:0;left:0;right:0;height:120px;pointer-events:none;z-index:0;opacity:.35;}
-
-/* TOPBAR */
 .topbar{background:var(--card);border-bottom:1.5px solid var(--border);padding:14px 18px;padding-top:max(14px,env(safe-area-inset-top));display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;transition:background .3s;}
 .logo-area{display:flex;align-items:center;gap:10px;}
-.logo-frog{width:42px;height:42px;border-radius:12px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#e8001a;}
-.logo-frog img{width:100%;height:100%;object-fit:cover;}
+.logo-frog{width:42px;height:42px;border-radius:12px;overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:#e8001a;font-size:24px;}
 .topbar-title{font-size:17px;font-weight:700;letter-spacing:-.02em;}
 .topbar-sub{font-size:11px;color:var(--muted);}
 .topbar-actions{display:flex;align-items:center;gap:10px;}
 .avatar-sm{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;cursor:pointer;border:2px solid var(--border);}
 .icon-btn{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;background:var(--bg);border:1.5px solid var(--border);transition:background .15s;}
 .icon-btn:hover{background:var(--border);}
-
-/* NAV */
-.nav{display:flex;background:var(--card);border-bottom:1.5px solid var(--border);overflow-x:auto;position:sticky;top:71px;z-index:9;scrollbar-width:none;transition:background .3s;}
+.nav{display:flex;background:var(--card);border-bottom:1.5px solid var(--border);overflow-x:auto;position:sticky;top:71px;z-index:9;scrollbar-width:none;}
 .nav::-webkit-scrollbar{display:none;}
-.nav-btn{flex:1;min-width:64px;padding:13px 6px;text-align:center;font-size:12px;font-weight:600;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;font-family:var(--font);}
+.nav-btn{flex:1;min-width:60px;padding:13px 4px;text-align:center;font-size:11px;font-weight:600;color:var(--muted);border:none;background:none;cursor:pointer;border-bottom:3px solid transparent;transition:all .15s;white-space:nowrap;font-family:var(--font);position:relative;}
 .nav-btn.active{color:var(--am);border-bottom-color:var(--am);}
-
-/* SCREENS */
+.chat-badge{position:absolute;top:6px;right:6px;background:#e8001a;color:white;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;display:none;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--card);animation:pop .2s ease;}
+@keyframes pop{0%{transform:scale(0);}70%{transform:scale(1.2);}100%{transform:scale(1);}}
 .screen{display:none;padding:16px 16px 0;}
 .screen.active{display:block;}
 .sh{font-size:11px;font-weight:700;letter-spacing:.09em;color:var(--muted);text-transform:uppercase;margin:0 0 12px;display:flex;align-items:center;gap:6px;}
 .card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;transition:background .3s,border-color .3s;}
-
-/* SESSION CARDS */
 .session-card{border-radius:var(--radius);padding:14px 16px;margin-bottom:10px;position:relative;overflow:hidden;}
 .session-card.am{background:var(--am-light);border:1.5px solid var(--am-bg);}
 .session-card.pm{background:var(--pm-light);border:1.5px solid var(--pm-bg);}
 .session-card.sat{background:var(--sat-light);border:1.5px solid var(--sat-bg);}
 .session-card::after{content:'';position:absolute;bottom:-8px;left:0;right:0;height:20px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 20'%3E%3Cpath d='M0,10 C50,0 100,20 150,10 C200,0 250,20 300,10 C350,0 400,20 400,10 L400,20 L0,20 Z' fill='rgba(255,255,255,0.15)'/%3E%3C/svg%3E") repeat-x;opacity:.6;}
 .session-label{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
-.session-label.am{color:var(--am);}
-.session-label.pm{color:var(--pm);}
-.session-label.sat{color:var(--sat);}
+.session-label.am{color:var(--am);}.session-label.pm{color:var(--pm);}.session-label.sat{color:var(--sat);}
 .session-row{display:flex;align-items:center;justify-content:space-between;gap:8px;}
 .attendee-stack{display:flex;}
 .attendee-stack .av{width:28px;height:28px;border-radius:50%;border:2.5px solid white;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-left:-6px;}
 .attendee-stack .av:first-child{margin-left:0;}
 .att-count{font-size:13px;color:var(--muted);white-space:nowrap;}
-
-/* TOGGLES */
 .tog-wrap{display:flex;gap:6px;}
 .tog{min-width:60px;padding:9px 16px;border-radius:var(--radius-sm);border:2px solid var(--border2);background:var(--card);font-size:14px;font-weight:700;cursor:pointer;color:var(--muted);transition:all .15s;font-family:var(--font);touch-action:manipulation;}
 .tog:active{transform:scale(0.95);}
 .tog.yes{background:var(--yes-bg);border-color:var(--yes);color:var(--yes);}
 .tog.no{background:var(--red-bg);border-color:var(--red);color:var(--red);}
-
-/* ROSTER */
+.quick-btn{width:100%;padding:16px;border-radius:var(--radius);border:none;font-size:17px;font-weight:700;cursor:pointer;font-family:var(--font);touch-action:manipulation;transition:all .15s;margin-bottom:8px;}
+.quick-btn:active{transform:scale(0.97);}
+.quick-btn.morning{background:var(--am);color:white;}
+.quick-btn.evening{background:var(--pm);color:white;}
+.quick-btn.already{background:var(--yes-bg);color:var(--yes);border:2px solid var(--yes);}
+.tomorrow-card{background:linear-gradient(135deg,#e8f4ff,#d0e8ff);border:1.5px solid var(--border);border-radius:var(--radius);padding:14px 16px;margin-bottom:12px;}
+[data-dark="1"] .tomorrow-card{background:linear-gradient(135deg,#0d2244,#0a1a33);}
+.tomorrow-row{display:flex;align-items:center;gap:10px;padding:6px 0;}
+.frankies-btn{background:linear-gradient(135deg,#ff9500,#ff6b00);color:white;border:none;border-radius:99px;padding:8px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);touch-action:manipulation;transition:all .15s;display:flex;align-items:center;gap:6px;}
+.frankies-btn:active{transform:scale(0.95);}
+.frankies-btn.going{background:linear-gradient(135deg,#00aa55,#007733);}
+.reaction-bar{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap;}
+.reaction-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:99px;padding:5px 12px;font-size:13px;cursor:pointer;touch-action:manipulation;transition:all .15s;display:flex;align-items:center;gap:4px;}
+.reaction-btn:active{transform:scale(0.92);}
+.reaction-btn.reacted{background:var(--am-bg);border-color:var(--am);}
+.reaction-count{font-size:11px;font-weight:700;color:var(--muted);}
 .roster-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
 .roster-row:last-child{border-bottom:none;}
 .r-name{flex:1;font-size:15px;}
@@ -101,8 +97,6 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .spill.am{background:var(--am-bg);color:var(--am);}
 .spill.pm{background:var(--pm-bg);color:var(--pm);}
 .spill.sat{background:var(--sat-bg);color:var(--sat);}
-
-/* WEEK TABLE */
 .week-planner{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .wp-table{border-collapse:collapse;width:100%;min-width:480px;}
 .wp-table th{font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;padding:10px 4px;text-align:center;background:var(--bg);border-bottom:1.5px solid var(--border);}
@@ -114,24 +108,17 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .mini-tog:active{transform:scale(0.92);}
 .mini-tog.yes{background:var(--yes-bg);border-color:var(--yes);color:var(--yes);}
 .mini-tog.no{background:var(--red-bg);border-color:var(--red);color:var(--red);}
-
-/* CALENDAR */
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
 .cal-cell{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;background:var(--bg);color:var(--hint);}
 .cal-cell.am1{background:var(--am-bg);color:var(--am);}
 .cal-cell.pm1{background:var(--pm-bg);color:var(--pm);}
-.cal-cell.sat1{background:var(--sat-bg);color:var(--sat);}
 .cal-cell.full{background:var(--am);color:white;}
 .cal-cell.today{outline:2.5px solid var(--am);outline-offset:1px;font-weight:700;}
 .cal-cell.empty{background:none;}
-
-/* CHAT */
 .chat-wrap{background:linear-gradient(160deg,#e8f4ff 0%,#d0e8ff 100%);border-radius:var(--radius);padding:14px;margin-bottom:10px;border:1.5px solid var(--border);position:relative;overflow:hidden;}
 [data-dark="1"] .chat-wrap{background:linear-gradient(160deg,#0d2244 0%,#0a1a33 100%);}
 .chat-wave{position:absolute;bottom:0;left:0;right:0;height:30px;opacity:.25;}
 .chat-area{display:flex;flex-direction:column;gap:10px;max-height:340px;overflow-y:auto;margin-bottom:12px;padding-right:4px;position:relative;z-index:1;-webkit-overflow-scrolling:touch;}
-.chat-area::-webkit-scrollbar{width:3px;}
-.chat-area::-webkit-scrollbar-thumb{background:var(--border2);border-radius:4px;}
 .msg{display:flex;flex-direction:column;}
 .msg.mine{align-items:flex-end;}
 .msg-meta{font-size:11px;color:var(--muted);margin-bottom:3px;}
@@ -140,16 +127,12 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 [data-dark="1"] .bubble.them{background:#1a3355;}
 .bubble.mine{background:var(--am);color:white;border-bottom-right-radius:4px;}
 .chat-input-row{display:flex;gap:8px;position:relative;z-index:1;}
-
-/* STATS */
 .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
 .stat-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;transition:background .3s;}
 .stat-num{font-size:30px;font-weight:700;letter-spacing:-.03em;margin-bottom:2px;}
 .sdots{display:flex;gap:4px;margin-top:10px;}
 .sdot{width:10px;height:10px;border-radius:50%;background:var(--border);}
 .sdot.on{background:var(--streak);}
-
-/* ACHIEVEMENTS */
 .achievement{background:linear-gradient(135deg,#fff8e0,#fff3c0);border:1.5px solid #f0d060;border-radius:var(--radius);padding:12px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;}
 [data-dark="1"] .achievement{background:linear-gradient(135deg,#2a2200,#1a1800);border-color:#554400;}
 .achievement-icon{font-size:28px;flex-shrink:0;}
@@ -157,35 +140,23 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .achievement-text p{font-size:12px;color:#aa8800;}
 [data-dark="1"] .achievement-text h3{color:#ffdd44;}
 [data-dark="1"] .achievement-text p{color:#ccaa00;}
-
-/* AUTH */
-.auth-wrap{max-width:400px;margin:2rem auto;padding:0 16px;}
-.auth-card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:28px 24px;transition:background .3s;}
-.frog-logo{width:56px;height:56px;background:var(--frog);border-radius:16px;overflow:hidden;margin-bottom:16px;display:flex;align-items:center;justify-content:center;}
-.frog-logo img{width:100%;height:100%;object-fit:cover;}
-.field{width:100%;padding:13px 15px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:15px;font-family:var(--font);background:var(--bg);color:var(--text);margin-bottom:10px;outline:none;transition:border-color .15s;-webkit-appearance:none;}
-.field:focus{border-color:var(--am);}
-.field.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:3px;}
-.btn-main{width:100%;padding:14px;background:var(--am);color:white;border:none;border-radius:var(--radius-sm);font-size:16px;font-weight:700;font-family:var(--font);cursor:pointer;margin-bottom:10px;touch-action:manipulation;transition:background .15s;}
-.btn-main:hover{background:#0055bb;}
-.btn-main:active{transform:scale(0.98);}
-.btn-main:disabled{background:#aac;cursor:not-allowed;}
-.btn-sec{width:100%;padding:13px;background:none;color:var(--text);border:2px solid var(--border2);border-radius:var(--radius-sm);font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;margin-bottom:10px;touch-action:manipulation;}
-.btn-sec:active{transform:scale(0.98);}
-.err{font-size:13px;color:var(--red);margin-bottom:10px;padding:10px;background:var(--red-bg);border-radius:8px;}
-.code-display{font-family:var(--mono);font-size:24px;font-weight:700;letter-spacing:5px;text-align:center;background:var(--am-bg);border-radius:var(--radius-sm);padding:16px;margin:12px 0;color:var(--am);}
-
-/* LOADING */
-.loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;gap:14px;}
-.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--am);border-radius:50%;animation:spin .7s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-
-/* SETTINGS PANEL */
+.weekly-summary{background:linear-gradient(135deg,var(--am-bg),var(--pm-bg));border:1.5px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
+.absent-banner{background:linear-gradient(135deg,#fff3e0,#ffe0cc);border:1.5px solid #ffb366;border-radius:var(--radius);padding:12px 16px;margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+[data-dark="1"] .absent-banner{background:linear-gradient(135deg,#2a1500,#1a1000);border-color:#884400;}
+.profile-overlay{position:fixed;inset:0;z-index:60;display:none;align-items:flex-end;justify-content:center;}
+.profile-overlay.open{display:flex;}
+.profile-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.45);}
+.profile-sheet{position:relative;background:var(--card);border-radius:20px 20px 0 0;padding:24px 20px;padding-bottom:max(24px,env(safe-area-inset-bottom));width:100%;max-width:700px;max-height:85vh;overflow-y:auto;transition:background .3s;}
+.profile-avatar{width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:700;margin:0 auto 12px;}
+.leaderboard-row{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--border);}
+.leaderboard-row:last-child{border-bottom:none;}
+.lb-rank{font-size:18px;width:28px;text-align:center;flex-shrink:0;}
+.lb-count{font-size:13px;font-weight:700;color:var(--am);margin-left:auto;}
 .settings-panel{position:fixed;inset:0;z-index:50;display:none;}
 .settings-panel.open{display:block;}
 .settings-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.4);}
 .settings-drawer{position:absolute;right:0;top:0;bottom:0;width:min(320px,85vw);background:var(--card);padding:24px 20px;padding-top:max(24px,env(safe-area-inset-top));overflow-y:auto;transition:background .3s;}
-.settings-title{font-size:18px;font-weight:700;margin-bottom:20px;display:flex;align-items:center;gap:8px;}
+.settings-title{font-size:18px;font-weight:700;margin-bottom:20px;}
 .settings-row{display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--border);}
 .settings-row:last-child{border-bottom:none;}
 .settings-label{font-size:15px;font-weight:500;}
@@ -194,107 +165,82 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 .toggle-switch.on{background:var(--am);}
 .toggle-switch::after{content:'';position:absolute;width:22px;height:22px;background:white;border-radius:50%;top:3px;left:3px;transition:transform .2s;}
 .toggle-switch.on::after{transform:translateX(20px);}
-
-/* COPY BTN */
 .copy-btn{background:var(--am-bg);border:1.5px solid var(--am);color:var(--am);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);touch-action:manipulation;transition:all .15s;}
 .copy-btn:active{transform:scale(0.95);}
 .copy-btn.copied{background:var(--yes-bg);border-color:var(--yes);color:var(--yes);}
-
-/* SYNC */
+.auth-wrap{max-width:400px;margin:2rem auto;padding:0 16px;}
+.auth-card{background:var(--card);border:1.5px solid var(--border);border-radius:18px;padding:28px 24px;transition:background .3s;}
+.frog-logo{width:56px;height:56px;background:var(--frog);border-radius:16px;overflow:hidden;margin-bottom:16px;display:flex;align-items:center;justify-content:center;font-size:30px;}
+.field{width:100%;padding:13px 15px;border:2px solid var(--border);border-radius:var(--radius-sm);font-size:15px;font-family:var(--font);background:var(--bg);color:var(--text);margin-bottom:10px;outline:none;transition:border-color .15s;-webkit-appearance:none;}
+.field:focus{border-color:var(--am);}
+.field.mono{font-family:var(--mono);text-transform:uppercase;letter-spacing:3px;}
+.btn-main{width:100%;padding:14px;background:var(--am);color:white;border:none;border-radius:var(--radius-sm);font-size:16px;font-weight:700;font-family:var(--font);cursor:pointer;margin-bottom:10px;touch-action:manipulation;transition:background .15s;}
+.btn-main:active{transform:scale(0.98);}
+.btn-main:disabled{background:#aac;cursor:not-allowed;}
+.btn-sec{width:100%;padding:13px;background:none;color:var(--text);border:2px solid var(--border2);border-radius:var(--radius-sm);font-size:15px;font-weight:600;font-family:var(--font);cursor:pointer;margin-bottom:10px;touch-action:manipulation;}
+.btn-sec:active{transform:scale(0.98);}
+.err{font-size:13px;color:var(--red);margin-bottom:10px;padding:10px;background:var(--red-bg);border-radius:8px;}
+.code-display{font-family:var(--mono);font-size:24px;font-weight:700;letter-spacing:5px;text-align:center;background:var(--am-bg);border-radius:var(--radius-sm);padding:16px;margin:12px 0;color:var(--am);}
+.loading-overlay{position:fixed;inset:0;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;gap:14px;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);border-top-color:var(--am);border-radius:50%;animation:spin .7s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg);}}
 .sync-dot{width:7px;height:7px;border-radius:50%;background:var(--border);display:inline-block;margin-right:5px;vertical-align:middle;}
 .sync-dot.saving{background:var(--streak);}
 .sync-dot.saved{background:var(--yes);}
 .sync-dot.error{background:var(--red);}
-
-/* RIPPLE ANIMATION */
-@keyframes ripple{0%{transform:scale(0);opacity:.6;}100%{transform:scale(4);opacity:0;}}
-.ripple{position:relative;overflow:hidden;}
-.ripple-effect{position:absolute;border-radius:50%;background:rgba(0,102,204,.2);animation:ripple .5s linear;pointer-events:none;}
-
-/* WAVE ANIMATION */
-@keyframes wave{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
-.wave-anim{animation:wave 8s linear infinite;}
-
-/* CHAT BADGE */
-.nav-chat-wrap{position:relative;display:inline-flex;align-items:center;justify-content:center;width:100%;}
-.chat-badge{position:absolute;top:-2px;right:calc(50% - 28px);background:#e8001a;color:white;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:99px;display:flex;align-items:center;justify-content:center;padding:0 4px;border:2px solid var(--card);animation:pop .2s ease;}
-@keyframes pop{0%{transform:scale(0);}70%{transform:scale(1.2);}100%{transform:scale(1);}}
-
-/* TOAST */
-.toast{position:fixed;bottom:calc(5rem + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:#0066cc;color:white;padding:10px 20px;border-radius:99px;font-size:14px;font-weight:600;opacity:0;transition:all .3s;z-index:200;white-space:nowrap;}
+.toast{position:fixed;bottom:calc(5rem + env(safe-area-inset-bottom));left:50%;transform:translateX(-50%) translateY(20px);background:#0066cc;color:white;padding:10px 20px;border-radius:99px;font-size:14px;font-weight:600;opacity:0;transition:all .3s;z-index:200;white-space:nowrap;pointer-events:none;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-/* RESPONSIVE */
+.absent-badge{background:#ff9500;color:white;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;margin-left:6px;}
 @media(max-width:400px){
   .tog{min-width:52px;padding:9px 12px;font-size:13px;}
   .wp-table th,.wp-table td{padding:6px 2px;}
+  .nav-btn{font-size:10px;padding:11px 2px;}
 }
 </style>
 </head>
 <body>
 <div class="app">
 
-<!-- WAVE BG -->
 <svg class="wave-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
   <path d="M0,60 C180,20 360,100 540,60 C720,20 900,100 1080,60 C1260,20 1440,80 1440,60 L1440,120 L0,120 Z" fill="var(--wave1)"/>
   <path d="M0,80 C240,40 480,110 720,80 C960,50 1200,100 1440,80 L1440,120 L0,120 Z" fill="var(--wave2)" opacity=".5"/>
 </svg>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
-<!-- LOADING -->
-<div class="loading-overlay" id="loading-overlay">
-  <div class="spinner"></div>
-  <div style="font-size:15px;color:var(--muted);" id="loading-msg">🌊 Connecting…</div>
-</div>
-
-<!-- SETTINGS PANEL -->
+<!-- SETTINGS -->
 <div class="settings-panel" id="settings-panel">
   <div class="settings-backdrop" onclick="closeSettings()"></div>
   <div class="settings-drawer">
     <div class="settings-title">⚙️ Settings</div>
     <div class="settings-row">
-      <div>
-        <div class="settings-label">🌙 Dark mode</div>
-        <div class="settings-sub">Easier on the eyes at night</div>
-      </div>
+      <div><div class="settings-label">🌙 Dark mode</div><div class="settings-sub">Easier on the eyes at night</div></div>
       <div class="toggle-switch" id="tog-dark" onclick="toggleSetting('dark')"></div>
     </div>
     <div class="settings-row">
-      <div>
-        <div class="settings-label">✨ Animations</div>
-        <div class="settings-sub">Wave effects and transitions</div>
-      </div>
+      <div><div class="settings-label">✨ Animations</div><div class="settings-sub">Wave effects and transitions</div></div>
       <div class="toggle-switch on" id="tog-anim" onclick="toggleSetting('anim')"></div>
     </div>
     <div class="settings-row">
-      <div>
-        <div class="settings-label">🔔 Notifications</div>
-        <div class="settings-sub">When squad members check in</div>
-      </div>
-      <div class="toggle-switch" id="tog-notif" onclick="toggleSetting('notif')"></div>
+      <div><div class="settings-label">🏖 Absent mode</div><div class="settings-sub">On holiday? Pause your streak</div></div>
+      <div class="toggle-switch" id="tog-absent" onclick="toggleSetting('absent')"></div>
     </div>
-    <div style="margin-top:24px;">
-      <button class="btn-sec" onclick="signOut()">Sign out</button>
-    </div>
+    <div style="margin-top:24px;"><button class="btn-sec" onclick="signOut()">Sign out</button></div>
   </div>
+</div>
+
+<!-- PROFILE SHEET -->
+<div class="profile-overlay" id="profile-overlay">
+  <div class="profile-backdrop" onclick="closeProfile()"></div>
+  <div class="profile-sheet" id="profile-sheet"></div>
 </div>
 
 <!-- AUTH -->
 <div id="view-auth" style="display:none;">
-  <div style="text-align:center;padding:2rem 1rem 1rem;">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 80" style="width:100%;opacity:.4;margin-bottom:-10px;">
-      <path d="M0,40 C180,10 360,70 540,40 C720,10 900,70 1080,40 C1260,10 1440,60 1440,40 L1440,80 L0,80 Z" fill="var(--am)"/>
-    </svg>
-  </div>
   <div class="auth-wrap">
     <div id="auth-choose">
       <div class="auth-card">
-        <div class="frog-logo" id="auth-logo">
-          <img src="" id="auth-logo-img" alt="🐸" onerror="this.style.display='none';this.parentElement.innerHTML='🐸';" style="display:none;"/>
-          <span id="auth-logo-emoji" style="font-size:30px;">🐸</span>
-        </div>
+        <div class="frog-logo">🐸</div>
         <div style="font-size:22px;font-weight:700;letter-spacing:-.02em;margin-bottom:4px;">Squad 🏊</div>
         <div style="font-size:14px;color:var(--muted);margin-bottom:24px;">Your swim group, at a glance</div>
         <button class="btn-main" onclick="showPanel('auth-join')">🤽 Join a group</button>
@@ -320,7 +266,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
         <input class="field" id="create-name" placeholder="e.g. Alby Clark"/>
         <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:5px;">Group name</label>
         <input class="field" id="create-group-name" placeholder="e.g. Broadbeach Squad"/>
-        <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:5px;">Choose an invite code</label>
+        <label style="font-size:13px;color:var(--muted);display:block;margin-bottom:5px;">Invite code</label>
         <input class="field mono" id="create-code" placeholder="e.g. BEACH25" maxlength="12" oninput="this.value=this.value.toUpperCase()"/>
         <div class="err" id="create-err" style="display:none;"></div>
         <button class="btn-main" id="create-btn" onclick="doCreate()">Create group 🎉</button>
@@ -344,10 +290,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 <div id="view-app" style="display:none;">
   <div class="topbar">
     <div class="logo-area">
-      <div class="logo-frog" id="app-logo">
-        <img src="" id="app-logo-img" alt="" onerror="this.style.display='none';this.parentElement.innerHTML='🐸';" style="display:none;"/>
-        <span id="app-logo-emoji" style="font-size:24px;">🐸</span>
-      </div>
+      <div class="logo-frog">🐸</div>
       <div>
         <div class="topbar-title" id="top-group">Squad</div>
         <div class="topbar-sub" id="top-date"></div>
@@ -356,32 +299,39 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     <div class="topbar-actions">
       <div style="text-align:right;">
         <div style="font-size:13px;font-weight:600;" id="top-name"></div>
-        <div style="font-size:11px;display:flex;align-items:center;justify-content:flex-end;" id="sync-status"></div>
+        <div style="font-size:11px;" id="sync-status"></div>
       </div>
-      <div class="icon-btn" onclick="openSettings()" title="Settings">⚙️</div>
-      <div class="avatar-sm" id="top-av"></div>
+      <div class="icon-btn" onclick="openSettings()">⚙️</div>
+      <div class="avatar-sm" id="top-av" onclick="openProfile(me)"></div>
     </div>
   </div>
   <div class="nav">
     <button class="nav-btn active" onclick="switchTab('today',this)">🌅 Today</button>
     <button class="nav-btn" onclick="switchTab('week',this)">📅 Week</button>
     <button class="nav-btn" onclick="switchTab('calendar',this)">🗓 History</button>
-    <button class="nav-btn" id="nav-chat-btn" onclick="switchTab('chat',this)"><div class="nav-chat-wrap">💬 Chat<span class="chat-badge" id="chat-badge" style="display:none;">0</span></div></button>
+    <button class="nav-btn" id="nav-chat-btn" onclick="switchTab('chat',this)">💬 Chat<span class="chat-badge" id="chat-badge">0</span></button>
     <button class="nav-btn" onclick="switchTab('stats',this)">🏆 Stats</button>
   </div>
 
   <!-- TODAY -->
   <div class="screen active" id="tab-today">
+    <div id="absent-notice" style="display:none;">
+      <div class="absent-banner">🏖 <div><strong>Absent mode on</strong> — your streak is paused. Turn it off in Settings when you're back!</div></div>
+    </div>
+    <div id="quick-checkin"></div>
     <div class="sh">🌊 Today's sessions</div>
     <div id="today-sessions"></div>
+    <div id="frankies-section"></div>
     <div class="sh" style="margin-top:4px;">🤽 Who's in today</div>
     <div class="card" style="padding:12px 14px;" id="today-roster"></div>
+    <div class="sh" style="margin-top:4px;">🌅 Tomorrow preview</div>
+    <div id="tomorrow-preview"></div>
   </div>
 
   <!-- WEEK -->
   <div class="screen" id="tab-week">
     <div class="sh">📅 Your week</div>
-    <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Tap Y / N for each session — you can change it any time.</div>
+    <div style="font-size:13px;color:var(--muted);margin-bottom:12px;">Tap Y / N for each session — change it any time.</div>
     <div class="card" style="padding:0;overflow:hidden;">
       <div class="week-planner"><table class="wp-table" id="week-table"></table></div>
     </div>
@@ -429,6 +379,7 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
   <!-- STATS -->
   <div class="screen" id="tab-stats">
+    <div id="weekly-summary-card"></div>
     <div class="sh">🏆 Your stats</div>
     <div class="stat-grid">
       <div class="stat-card">
@@ -444,15 +395,17 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
     </div>
     <div class="sh">🎖 Achievements</div>
     <div id="achievements"></div>
+    <div class="sh" style="margin-top:4px;">🥇 Leaderboard — this month</div>
+    <div class="card" style="padding:10px 14px;" id="leaderboard"></div>
     <div class="sh" style="margin-top:4px;">🤽 Squad today</div>
     <div class="card" style="padding:10px 14px;" id="squad-stats"></div>
     <div style="margin-top:18px;text-align:center;padding-bottom:1rem;">
-      <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">🔑 Invite code for this group</div>
+      <div style="font-size:13px;color:var(--muted);margin-bottom:8px;">🔑 Invite code</div>
       <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
         <div style="font-family:var(--mono);font-size:22px;font-weight:700;letter-spacing:4px;color:var(--am);background:var(--am-bg);border-radius:var(--radius-sm);padding:12px 18px;" id="group-invite-display"></div>
         <button class="copy-btn" id="copy-code-btn" onclick="copyInviteCode()">Copy</button>
       </div>
-      <div style="font-size:12px;color:var(--hint);margin-top:8px;">Share this code with your friends 🤽</div>
+      <div style="font-size:12px;color:var(--hint);margin-top:8px;">Share this with your friends 🤽</div>
     </div>
   </div>
 </div>
@@ -470,38 +423,36 @@ const SESS={
   pm530:{cls:'pm',col:'#0044aa',label:'🌆 Evening Session',short:'Evening'},
   sat630:{cls:'sat',col:'#00557a',label:'🌅 Morning Session',short:'Morning'}
 };
+const REACTIONS=['🔥','💪','🏊','⚡','🎉'];
 const MC=['#0066cc','#0044aa','#00557a','#005588','#006644','#004488','#553300','#440055'];
 const MB=['#e0f0ff','#dceeff','#d6f0fa','#d6eef8','#d6f5e6','#d6e8ff','#f5ece0','#ede0f5'];
 
 let me=null,myGroup=null,groupData=null;
 let calMonth=new Date().getMonth(),calYear=new Date().getFullYear();
 let saveTimer=null,pollTimer=null;
-let settings={dark:false,anim:true,notif:false};
+let settings={dark:false,anim:true,notif:false,absent:false};
 
-// ── Settings ──────────────────────────────────────────────────
+// ── Settings ──────────────────────────────────────────────
 function loadSettings(){
   try{const s=JSON.parse(localStorage.getItem('squad_settings')||'{}');settings={...settings,...s};}catch(e){}
   applySettings();
 }
-function saveSettings(){
-  localStorage.setItem('squad_settings',JSON.stringify(settings));
-}
+function saveSettings(){localStorage.setItem('squad_settings',JSON.stringify(settings));}
 function applySettings(){
   document.documentElement.setAttribute('data-dark',settings.dark?'1':'0');
   document.getElementById('tog-dark').classList.toggle('on',settings.dark);
   document.getElementById('tog-anim').classList.toggle('on',settings.anim);
-  document.getElementById('tog-notif').classList.toggle('on',settings.notif);
+  document.getElementById('tog-absent').classList.toggle('on',settings.absent);
   const waveEl=document.querySelector('.wave-bg');
   if(waveEl) waveEl.style.display=settings.anim?'block':'none';
+  const absentNotice=document.getElementById('absent-notice');
+  if(absentNotice) absentNotice.style.display=settings.absent?'block':'none';
 }
-function toggleSetting(key){
-  settings[key]=!settings[key];
-  saveSettings();applySettings();
-}
+function toggleSetting(key){settings[key]=!settings[key];saveSettings();applySettings();}
 function openSettings(){document.getElementById('settings-panel').classList.add('open');}
 function closeSettings(){document.getElementById('settings-panel').classList.remove('open');}
 
-// ── Supabase ──────────────────────────────────────────────────
+// ── Supabase ──────────────────────────────────────────────
 async function loadGroup(code){
   const{data,error}=await sb.from('squads').select('data').eq('id',code).single();
   if(error) return null;
@@ -533,26 +484,36 @@ async function pollUpdates(){
   try{
     const fresh=await loadGroup(myGroup);
     if(!fresh) return;
+    const beforeChat=((groupData&&groupData.chat)||[]).length;
     const before=JSON.stringify(groupData);
-    const beforeChatLen=(groupData&&groupData.chat)||[];
     groupData=fresh;
-    const afterChatLen=(groupData&&groupData.chat)||[];
-    // Always update badge when chat grows
-    if(afterChatLen.length>beforeChatLen.length) updateChatBadge();
+    if(((groupData&&groupData.chat)||[]).length>beforeChat) updateChatBadge();
     if(JSON.stringify(groupData)!==before) refreshTab();
   }catch(e){}
 }
 function startPolling(){pollTimer=setInterval(pollUpdates,8000);}
 function stopPolling(){if(pollTimer) clearInterval(pollTimer);}
 
-// ── Toast ─────────────────────────────────────────────────────
+// ── Toast ──────────────────────────────────────────────────
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2500);
 }
 
-// ── Copy invite code ──────────────────────────────────────────
+// ── Chat badge ─────────────────────────────────────────────
+function getLastSeen(){try{return parseInt(localStorage.getItem('squad_seen_'+myGroup)||'0');}catch(e){return 0;}}
+function setLastSeen(n){try{localStorage.setItem('squad_seen_'+myGroup,String(n));}catch(e){}}
+function updateChatBadge(){
+  const msgs=(groupData&&groupData.chat)||[];
+  const unread=msgs.filter((m,i)=>i>=getLastSeen()&&m.name!==me).length;
+  const badge=document.getElementById('chat-badge');
+  if(!badge) return;
+  if(unread>0){badge.textContent=unread>99?'99+':unread;badge.style.display='flex';}
+  else badge.style.display='none';
+}
+
+// ── Copy invite ────────────────────────────────────────────
 function copyInviteCode(){
   if(!myGroup) return;
   navigator.clipboard.writeText(myGroup).then(()=>{
@@ -560,53 +521,34 @@ function copyInviteCode(){
     btn.textContent='Copied! ✓';btn.classList.add('copied');
     setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);
     showToast('Invite code copied! 🎉');
-  }).catch(()=>{
-    const el=document.getElementById('group-invite-display');
-    const range=document.createRange();range.selectNode(el);
-    window.getSelection().removeAllRanges();window.getSelection().addRange(range);
-    showToast('Long-press to copy the code');
-  });
+  }).catch(()=>showToast('Long-press the code to copy'));
 }
 
-// ── Auth ─────────────────────────────────────────────────────
+// ── Auth ───────────────────────────────────────────────────
 function showPanel(id){
   ['auth-choose','auth-join','auth-create','auth-created'].forEach(p=>{
     document.getElementById(p).style.display=p===id?'block':'none';
   });
 }
-
-// Restore saved session
 function tryRestoreSession(){
-  try{
-    const saved=JSON.parse(localStorage.getItem('squad_session')||'null');
-    if(saved&&saved.me&&saved.myGroup) return saved;
-  }catch(e){}
-  return null;
+  try{const s=JSON.parse(localStorage.getItem('squad_session')||'null');if(s&&s.me&&s.myGroup)return s;}catch(e){}return null;
 }
-function saveSession(){
-  localStorage.setItem('squad_session',JSON.stringify({me,myGroup}));
-}
-function clearSession(){
-  localStorage.removeItem('squad_session');
-}
+function saveSession(){localStorage.setItem('squad_session',JSON.stringify({me,myGroup}));}
+function clearSession(){localStorage.removeItem('squad_session');}
 
 async function doCreate(){
   const name=document.getElementById('create-name').value.trim();
   const grpName=document.getElementById('create-group-name').value.trim();
   const code=document.getElementById('create-code').value.trim().toUpperCase();
-  const err=document.getElementById('create-err');
-  const btn=document.getElementById('create-btn');
+  const err=document.getElementById('create-err');const btn=document.getElementById('create-btn');
   if(!name||!grpName||!code){err.textContent='Please fill in all fields.';err.style.display='block';return;}
   if(code.length<3){err.textContent='Code must be at least 3 characters.';err.style.display='block';return;}
   btn.disabled=true;btn.textContent='Creating…';err.style.display='none';
   try{
-    const exists=await groupExists(code);
-    if(exists){err.textContent='That code is taken — try another.';err.style.display='block';btn.disabled=false;btn.textContent='Create group 🎉';return;}
-    const newGroup={name:grpName,members:[name],chat:[],attendance:{},hist:{}};
-    const ok=await saveGroup(code,newGroup);
-    if(!ok) throw new Error('Save failed');
-    groupData=newGroup;me=name;myGroup=code;
-    saveSession();
+    if(await groupExists(code)){err.textContent='That code is taken — try another.';err.style.display='block';btn.disabled=false;btn.textContent='Create group 🎉';return;}
+    const newGroup={name:grpName,members:[name],chat:[],attendance:{},hist:{},reactions:{},frankies:{}};
+    await saveGroup(code,newGroup);
+    groupData=newGroup;me=name;myGroup=code;saveSession();
     document.getElementById('created-code-display').textContent=code;
     showPanel('auth-created');
   }catch(e){err.textContent='Connection error. Please try again.';err.style.display='block';}
@@ -616,8 +558,7 @@ async function doCreate(){
 async function doJoin(){
   const code=document.getElementById('join-code').value.trim().toUpperCase();
   const name=document.getElementById('join-name').value.trim();
-  const err=document.getElementById('join-err');
-  const btn=document.getElementById('join-btn');
+  const err=document.getElementById('join-err');const btn=document.getElementById('join-btn');
   if(!code||!name){err.textContent='Please fill in all fields.';err.style.display='block';return;}
   btn.disabled=true;btn.textContent='Joining…';err.style.display='none';
   try{
@@ -625,9 +566,7 @@ async function doJoin(){
     if(!data){err.textContent='Group not found. Check the invite code.';err.style.display='block';btn.disabled=false;btn.textContent='Join the squad 🏊';return;}
     if(!data.members) data.members=[];
     if(!data.members.includes(name)){data.members.push(name);await saveGroup(code,data);}
-    groupData=data;me=name;myGroup=code;
-    saveSession();
-    enterApp();
+    groupData=data;me=name;myGroup=code;saveSession();enterApp();
   }catch(e){err.textContent='Connection error. Please try again.';err.style.display='block';}
   btn.disabled=false;btn.textContent='Join the squad 🏊';
 }
@@ -639,14 +578,13 @@ function enterApp(){
 }
 function signOut(){
   if(!confirm('Sign out?')) return;
-  stopPolling();me=null;myGroup=null;groupData=null;
-  clearSession();closeSettings();
+  stopPolling();me=null;myGroup=null;groupData=null;clearSession();closeSettings();
   document.getElementById('view-app').style.display='none';
   document.getElementById('view-auth').style.display='block';
   showPanel('auth-choose');
 }
 
-// ── App init ──────────────────────────────────────────────────
+// ── App init ───────────────────────────────────────────────
 function initApp(){
   document.getElementById('top-group').textContent=groupData.name||'Squad';
   document.getElementById('top-date').textContent=new Date().toLocaleDateString('en-AU',{weekday:'long',day:'numeric',month:'long'});
@@ -655,8 +593,8 @@ function initApp(){
   const col=mCol(me);
   const av=document.getElementById('top-av');
   av.textContent=initials(me);av.style.background=col.bg;av.style.color=col.c;
-  renderToday();renderCalendar();renderStats();
-  updateChatBadge();
+  applySettings();
+  renderToday();renderCalendar();renderStats();updateChatBadge();
   startPolling();
 }
 function refreshTab(){
@@ -667,9 +605,10 @@ function refreshTab(){
   else if(id==='tab-calendar') renderCalendar();
   else if(id==='tab-chat') renderChat();
   else if(id==='tab-stats') renderStats();
+  updateChatBadge();
 }
 
-// ── Helpers ───────────────────────────────────────────────────
+// ── Helpers ────────────────────────────────────────────────
 function initials(n){return n.split(' ').map(w=>w[0]).join('').substring(0,2).toUpperCase();}
 function mCol(name){
   const members=(groupData&&groupData.members)||[];
@@ -693,23 +632,61 @@ function setAtt(datekey,sess,name,val){
   scheduleSave();
 }
 
-// ── Today ─────────────────────────────────────────────────────
+// ── Quick check-in ─────────────────────────────────────────
+function renderQuickCheckin(){
+  const dow=new Date().getDay();const tk=todayKey();
+  const sessions=sessForDow(dow);
+  const cont=document.getElementById('quick-checkin');cont.innerHTML='';
+  if(!sessions.length) return;
+  sessions.forEach(sess=>{
+    const att=getAtt(tk,sess);const myVal=att[me]||'';
+    const sc=SESS[sess];
+    const btn=document.createElement('button');
+    if(myVal==='yes'){
+      btn.className='quick-btn already';
+      btn.textContent=`✓ You're in for ${sc.short}! Tap to undo`;
+    } else {
+      btn.className=`quick-btn ${sc.cls==='am'||sc.cls==='sat'?'morning':'evening'}`;
+      btn.textContent=`🏊 I'm swimming ${sc.short}!`;
+    }
+    btn.onclick=()=>{
+      const newVal=myVal==='yes'?'':' yes';
+      tapTog(sess,tk,myVal==='yes'?'no':'yes');
+    };
+    cont.appendChild(btn);
+  });
+}
+
+// ── Today ──────────────────────────────────────────────────
 function renderToday(){
   const dow=new Date().getDay();const tk=todayKey();
   const sessions=sessForDow(dow);
+  renderQuickCheckin();
   const cont=document.getElementById('today-sessions');cont.innerHTML='';
   if(!sessions.length){
     cont.innerHTML='<div class="card" style="text-align:center;padding:2rem;font-size:15px;">😴 No sessions today — enjoy the rest!</div>';
-    renderRoster([],tk);return;
+    renderRoster([],tk);renderFrankies(dow,tk);renderTomorrow();return;
   }
   sessions.forEach(s=>cont.appendChild(buildSessCard(s,tk)));
   renderRoster(sessions,tk);
+  renderFrankies(dow,tk);
+  renderTomorrow();
 }
+
 function buildSessCard(sess,datekey){
   const sc=SESS[sess];const att=getAtt(datekey,sess);
   const yesNames=Object.entries(att).filter(([,v])=>v==='yes').map(([n])=>n);
   const myVal=att[me]||'';
   const div=document.createElement('div');div.className=`session-card ${sc.cls}`;
+  // Reactions for this session
+  const reactionKey=`${datekey}-${sess}`;
+  const sessReactions=(groupData.reactions||{})[reactionKey]||{};
+  let reactionHTML='<div class="reaction-bar">';
+  REACTIONS.forEach(r=>{
+    const who=sessReactions[r]||[];const myReacted=who.includes(me);
+    reactionHTML+=`<button class="reaction-btn${myReacted?' reacted':''}" onclick="toggleReaction('${reactionKey}','${r}')">${r}<span class="reaction-count">${who.length||''}</span></button>`;
+  });
+  reactionHTML+='</div>';
   div.innerHTML=`<div class="session-label ${sc.cls}">${sc.label}</div>
   <div class="session-row">
     <div style="display:flex;align-items:center;gap:8px;">
@@ -720,10 +697,21 @@ function buildSessCard(sess,datekey){
       <button class="tog${myVal==='yes'?' yes':''}" id="ty-${sess}" onclick="tapTog('${sess}','${datekey}','yes')">✓ Yes</button>
       <button class="tog${myVal==='no'?' no':''}" id="tn-${sess}" onclick="tapTog('${sess}','${datekey}','no')">✕ No</button>
     </div>
-  </div>`;
+  </div>${reactionHTML}`;
   setTimeout(()=>updateStack(sess,yesNames),0);
   return div;
 }
+
+function toggleReaction(reactionKey,emoji){
+  if(!groupData.reactions) groupData.reactions={};
+  if(!groupData.reactions[reactionKey]) groupData.reactions[reactionKey]={};
+  if(!groupData.reactions[reactionKey][emoji]) groupData.reactions[reactionKey][emoji]=[];
+  const arr=groupData.reactions[reactionKey][emoji];
+  const idx=arr.indexOf(me);
+  if(idx>=0) arr.splice(idx,1);else arr.push(me);
+  scheduleSave();renderToday();
+}
+
 function updateStack(sess,yesNames){
   const stk=document.getElementById(`stk-${sess}`);
   const cnt=document.getElementById(`cnt-${sess}`);
@@ -732,10 +720,9 @@ function updateStack(sess,yesNames){
   yesNames.slice(0,5).forEach(n=>{const col=mCol(n);const av=document.createElement('div');av.className='av';av.style.cssText=`background:${col.bg};color:${col.c};`;av.textContent=initials(n);stk.appendChild(av);});
   cnt.textContent=yesNames.length===0?'No one yet 👀':`${yesNames.length} swimmer${yesNames.length!==1?'s':''} 🏊`;
 }
+
 function tapTog(sess,datekey,val){
-  // Toggle off if same value selected again
-  const att=getAtt(datekey,sess);
-  const currentVal=att[me]||'';
+  const att=getAtt(datekey,sess);const currentVal=att[me]||'';
   const newVal=currentVal===val?'':val;
   setAtt(datekey,sess,me,newVal);
   const updatedAtt=getAtt(datekey,sess);
@@ -744,18 +731,24 @@ function tapTog(sess,datekey,val){
   if(yBtn) yBtn.className='tog'+(newVal==='yes'?' yes':'');
   if(nBtn) nBtn.className='tog'+(newVal==='no'?' no':'');
   renderRoster(sessForDow(new Date().getDay()),todayKey());
-  renderStats();
+  renderQuickCheckin();renderStats();
   if(document.getElementById('tab-week').classList.contains('active')) renderWeekPlan();
   if(newVal==='yes') showToast(`✓ You're in for ${SESS[sess].short}! 🏊`);
 }
+
 function renderRoster(sessions,tk){
   const roster=document.getElementById('today-roster');roster.innerHTML='';
   const names=[...new Set([...(groupData.members||[]),me])];
   names.forEach(name=>{
     const col=mCol(name);
     const row=document.createElement('div');row.className='roster-row';
-    const av=document.createElement('div');av.className='avatar-sm';av.style.cssText=`background:${col.bg};color:${col.c};width:34px;height:34px;font-size:12px;flex-shrink:0;border:none;`;av.textContent=initials(name);
-    const nm=document.createElement('div');nm.className='r-name';nm.style.fontWeight=name===me?'700':'400';nm.textContent=name+(name===me?' (you)':'');
+    const av=document.createElement('div');av.className='avatar-sm';
+    av.style.cssText=`background:${col.bg};color:${col.c};width:34px;height:34px;font-size:12px;flex-shrink:0;border:none;cursor:pointer;`;
+    av.textContent=initials(name);av.onclick=()=>openProfile(name);
+    const nm=document.createElement('div');nm.className='r-name';nm.style.fontWeight=name===me?'700':'400';
+    nm.textContent=name+(name===me?' (you)':'');
+    const absent=(groupData.absentMembers||[]).includes(name);
+    if(absent){const b=document.createElement('span');b.className='absent-badge';b.textContent='Away';nm.appendChild(b);}
     const pills=document.createElement('div');pills.className='r-pills';
     sessions.forEach(s=>{const att=getAtt(tk,s);if(att[name]==='yes'){const p=document.createElement('span');p.className=`spill ${SESS[s].cls}`;p.textContent=SESS[s].short;pills.appendChild(p);}});
     if(!pills.children.length){const p=document.createElement('span');p.style.cssText='font-size:13px;color:var(--hint);';p.textContent='—';pills.appendChild(p);}
@@ -763,7 +756,76 @@ function renderRoster(sessions,tk){
   });
 }
 
-// ── Week plan ─────────────────────────────────────────────────
+// ── Frankies (Saturday only) ───────────────────────────────
+function renderFrankies(dow,tk){
+  const cont=document.getElementById('frankies-section');cont.innerHTML='';
+  if(dow!==6) return; // Saturday only
+  const frankies=(groupData.frankies||{})[tk]||[];
+  const iGoing=frankies.includes(me);
+  const div=document.createElement('div');
+  div.className='card';
+  div.style.background='linear-gradient(135deg,#fff4e0,#ffe8c0)';
+  div.style.borderColor='#ffb347';
+  const othersGoing=frankies.filter(n=>n!==me);
+  let whoText=frankies.length===0?'Be the first!'
+    :frankies.length===1&&iGoing?'Just you so far!'
+    :othersGoing.slice(0,3).join(', ')+(othersGoing.length>3?` +${othersGoing.length-3} more`:'');
+  div.innerHTML=`<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+    <div>
+      <div style="font-size:15px;font-weight:700;color:#7a3800;margin-bottom:2px;">☕ Frankies after? </div>
+      <div style="font-size:13px;color:#aa5500;">${whoText}</div>
+    </div>
+    <button class="frankies-btn${iGoing?' going':''}" onclick="toggleFrankies('${tk}')">
+      ${iGoing?'✓ I\'m going!':'Count me in!'}
+    </button>
+  </div>`;
+  cont.appendChild(div);
+}
+
+function toggleFrankies(tk){
+  if(!groupData.frankies) groupData.frankies={};
+  if(!groupData.frankies[tk]) groupData.frankies[tk]=[];
+  const arr=groupData.frankies[tk];
+  const idx=arr.indexOf(me);
+  if(idx>=0){arr.splice(idx,1);showToast('Removed from Frankies 👋');}
+  else{arr.push(me);showToast('See you at Frankies! ☕');}
+  scheduleSave();renderFrankies(new Date().getDay(),tk);
+}
+
+// ── Tomorrow preview ───────────────────────────────────────
+function renderTomorrow(){
+  const tomorrow=new Date();tomorrow.setDate(tomorrow.getDate()+1);
+  const dow=tomorrow.getDay();const tk=dk(tomorrow);
+  const sessions=sessForDow(dow);
+  const cont=document.getElementById('tomorrow-preview');cont.innerHTML='';
+  if(!sessions.length){
+    cont.innerHTML='<div class="card" style="text-align:center;color:var(--muted);padding:1rem;font-size:14px;">😴 No sessions tomorrow</div>';
+    return;
+  }
+  const card=document.createElement('div');card.className='tomorrow-card';
+  card.innerHTML=`<div style="font-size:13px;font-weight:700;color:var(--am);margin-bottom:10px;">${DAYS[dow]} — ${sessions.map(s=>SESS[s].short).join(' & ')}</div>`;
+  sessions.forEach(sess=>{
+    const att=getAtt(tk,sess);
+    const yesNames=Object.entries(att).filter(([,v])=>v==='yes').map(([n])=>n);
+    const row=document.createElement('div');row.className='tomorrow-row';
+    const sc=SESS[sess];
+    row.innerHTML=`<span class="spill ${sc.cls}" style="font-size:12px;">${sc.short}</span>`;
+    if(yesNames.length===0){row.innerHTML+=`<span style="font-size:13px;color:var(--hint);">No one yet — be first! 👀</span>`;}
+    else{
+      yesNames.forEach(n=>{
+        const col=mCol(n);
+        const av=document.createElement('div');av.className='avatar-sm';
+        av.style.cssText=`background:${col.bg};color:${col.c};width:26px;height:26px;font-size:10px;border:none;flex-shrink:0;`;
+        av.textContent=initials(n);row.appendChild(av);
+      });
+      row.innerHTML+=`<span style="font-size:13px;color:var(--muted);">${yesNames.length} swimmer${yesNames.length!==1?'s':''}</span>`;
+    }
+    card.appendChild(row);
+  });
+  cont.appendChild(card);
+}
+
+// ── Week plan ──────────────────────────────────────────────
 function renderWeekPlan(){
   const wdates=weekDates();const today=todayKey();
   const myTable=document.getElementById('week-table');
@@ -786,7 +848,6 @@ function renderWeekPlan(){
     h+=`</tr>`;
   });
   h+=`</tbody>`;myTable.innerHTML=h;
-
   const names=[...new Set([...(groupData.members||[]),me])];
   const st=document.getElementById('squad-week-table');
   let sh=`<thead><tr><th>Member</th>`;
@@ -795,7 +856,7 @@ function renderWeekPlan(){
   names.forEach(name=>{
     const col=mCol(name);
     sh+=`<tr${name===me?'style="background:var(--am-light);"':''}>
-      <td><span style="display:inline-flex;align-items:center;gap:6px;"><span style="width:8px;height:8px;border-radius:50%;background:${col.c};display:inline-block;flex-shrink:0;"></span>${name}${name===me?' <span style="font-size:10px;color:var(--muted);">(you)</span>':''}</span></td>`;
+      <td><span style="display:inline-flex;align-items:center;gap:6px;cursor:pointer;" onclick="openProfile('${name}')"><span style="width:8px;height:8px;border-radius:50%;background:${col.c};display:inline-block;flex-shrink:0;"></span>${name}${name===me?' <span style="font-size:10px;color:var(--muted);">(you)</span>':''}</span></td>`;
     wdates.forEach(d=>{
       const dkey=dk(d);const isT=dkey===today;let cells=[];
       sessForDow(d.getDay()).forEach(s=>{const att=getAtt(dkey,s);if(att[name]==='yes') cells.push(`<span class="spill ${SESS[s].cls}" style="font-size:9px;padding:2px 5px;">${s==='am525'||s==='sat630'?'AM':'PM'}</span>`);});
@@ -805,17 +866,14 @@ function renderWeekPlan(){
   });
   sh+=`</tbody>`;st.innerHTML=sh;
 }
-
 function tapWeekTog(sess,datekey,val){
-  const att=getAtt(datekey,sess);
-  const currentVal=att[me]||'';
-  const newVal=currentVal===val?'':val;
-  setAtt(datekey,sess,me,newVal);
+  const att=getAtt(datekey,sess);const currentVal=att[me]||'';
+  setAtt(datekey,sess,me,currentVal===val?'':val);
   renderWeekPlan();
   if(document.getElementById('tab-today').classList.contains('active')) renderToday();
 }
 
-// ── Calendar ──────────────────────────────────────────────────
+// ── Calendar ───────────────────────────────────────────────
 function renderCalendar(){
   const hist=(groupData&&groupData.hist)||{};
   document.getElementById('cal-month-label').textContent=`${MONTHS[calMonth]} ${calYear}`;
@@ -831,31 +889,14 @@ function renderCalendar(){
     const cell=document.createElement('div');cell.className='cal-cell';cell.textContent=day;
     if(count>=2) cell.classList.add('full');
     else if(h.pm530) cell.classList.add('pm1');
-    else if(h.sat630) cell.classList.add('am1');
-    else if(h.am525) cell.classList.add('am1');
+    else if(h.am525||h.sat630) cell.classList.add('am1');
     if(day===today.getDate()&&calMonth===today.getMonth()&&calYear===today.getFullYear()) cell.classList.add('today');
     grid.appendChild(cell);
   }
 }
 function calNav(dir){calMonth+=dir;if(calMonth<0){calMonth=11;calYear--;}if(calMonth>11){calMonth=0;calYear++;}renderCalendar();}
 
-// ── Chat ──────────────────────────────────────────────────────
-function getLastSeen(){
-  try{return parseInt(localStorage.getItem('squad_chat_seen_'+myGroup)||'0');}catch(e){return 0;}
-}
-function setLastSeen(n){
-  try{localStorage.setItem('squad_chat_seen_'+myGroup,String(n));}catch(e){}
-}
-function updateChatBadge(){
-  const msgs=(groupData&&groupData.chat)||[];
-  const lastSeen=getLastSeen();
-  // Count messages from others that we haven't seen
-  const unread=msgs.filter((m,i)=>i>=lastSeen&&m.name!==me).length;
-  const badge=document.getElementById('chat-badge');
-  if(!badge) return;
-  if(unread>0){badge.textContent=unread>99?'99+':unread;badge.style.display='flex';}
-  else badge.style.display='none';
-}
+// ── Chat ───────────────────────────────────────────────────
 function renderChat(){
   const msgs=(groupData&&groupData.chat)||[];
   const area=document.getElementById('chat-area');area.innerHTML='';
@@ -867,9 +908,7 @@ function renderChat(){
     div.appendChild(meta);div.appendChild(bubble);area.appendChild(div);
   });
   area.scrollTop=area.scrollHeight;
-  // Mark all as seen
-  setLastSeen(msgs.length);
-  updateChatBadge();
+  setLastSeen(msgs.length);updateChatBadge();
 }
 function sendChat(){
   const input=document.getElementById('chat-input');const text=input.value.trim();if(!text)return;
@@ -879,51 +918,150 @@ function sendChat(){
   scheduleSave();input.value='';renderChat();
 }
 
-// ── Achievements ──────────────────────────────────────────────
-const ACHIEVEMENT_DEFS=[
-  {id:'s10',icon:'🏅',title:'10 sessions!',desc:'You\'ve completed 10 sessions.',threshold:10,type:'year'},
+// ── Achievements ───────────────────────────────────────────
+const ACHV=[
+  {id:'s10',icon:'🏅',title:'10 sessions!',desc:'First milestone — keep going!',threshold:10,type:'year'},
   {id:'s25',icon:'🌟',title:'25 sessions!',desc:'Quarter century of swims!',threshold:25,type:'year'},
-  {id:'s50',icon:'🥈',title:'50 sessions!',desc:'Halfway to 100 — incredible!',threshold:50,type:'year'},
+  {id:'s50',icon:'🥈',title:'50 sessions!',desc:'Halfway to 100!',threshold:50,type:'year'},
   {id:'s100',icon:'🏆',title:'100 sessions!',desc:'100 sessions this year! Legend!',threshold:100,type:'year'},
-  {id:'s200',icon:'🎖',title:'200 sessions!',desc:'You are an absolute machine!',threshold:200,type:'year'},
+  {id:'s200',icon:'🎖',title:'200 sessions!',desc:'Absolute machine!',threshold:200,type:'year'},
   {id:'str7',icon:'🔥',title:'7-day streak!',desc:'Swimming 7 days in a row!',threshold:7,type:'streak'},
   {id:'str14',icon:'💥',title:'14-day streak!',desc:'Two weeks straight!',threshold:14,type:'streak'},
-  {id:'str30',icon:'⚡',title:'30-day streak!',desc:'A whole month without stopping!',threshold:30,type:'streak'},
+  {id:'str30',icon:'⚡',title:'30-day streak!',desc:'A whole month — unstoppable!',threshold:30,type:'streak'},
 ];
-function renderAchievements(yearCount,streak){
+function renderAchievements(yc,streak){
   const cont=document.getElementById('achievements');cont.innerHTML='';
-  const earned=ACHIEVEMENT_DEFS.filter(a=>{
-    if(a.type==='year') return yearCount>=a.threshold;
-    if(a.type==='streak') return streak>=a.threshold;
-    return false;
-  });
-  if(!earned.length){
-    cont.innerHTML=`<div class="card" style="text-align:center;color:var(--muted);padding:1.2rem;font-size:14px;">🏊 Keep swimming to earn achievements!</div>`;
-    return;
-  }
-  // Show highest earned only per type to avoid clutter
-  const topYear=earned.filter(a=>a.type==='year').pop();
-  const topStreak=earned.filter(a=>a.type==='streak').pop();
-  [topYear,topStreak].filter(Boolean).forEach(a=>{
+  const topYear=ACHV.filter(a=>a.type==='year'&&yc>=a.threshold).pop();
+  const topStreak=ACHV.filter(a=>a.type==='streak'&&streak>=a.threshold).pop();
+  const earned=[topYear,topStreak].filter(Boolean);
+  if(!earned.length){cont.innerHTML=`<div class="card" style="text-align:center;color:var(--muted);padding:1.2rem;font-size:14px;">🏊 Keep swimming to earn achievements!</div>`;return;}
+  earned.forEach(a=>{
     const div=document.createElement('div');div.className='achievement';
     div.innerHTML=`<div class="achievement-icon">${a.icon}</div><div class="achievement-text"><h3>${a.title}</h3><p>${a.desc}</p></div>`;
     cont.appendChild(div);
   });
 }
 
-// ── Stats ─────────────────────────────────────────────────────
+// ── Weekly summary ─────────────────────────────────────────
+function renderWeeklySummary(weekCount){
+  const cont=document.getElementById('weekly-summary-card');cont.innerHTML='';
+  // Only show on Sunday
+  if(new Date().getDay()!==0&&weekCount===0) return;
+  if(weekCount===0) return;
+  const div=document.createElement('div');div.className='weekly-summary card';
+  div.innerHTML=`<div style="font-size:22px;margin-bottom:6px;">📊</div>
+  <div style="font-size:16px;font-weight:700;margin-bottom:4px;">This week you swam ${weekCount} session${weekCount!==1?'s':''}!</div>
+  <div style="font-size:13px;color:var(--muted);">${weekCount>=5?'🏆 Amazing week!':weekCount>=3?'💪 Solid effort!':weekCount>=1?'🌊 Good start — keep it up!':'Rest week 😴'}</div>`;
+  cont.appendChild(div);
+}
+
+// ── Leaderboard ────────────────────────────────────────────
+function renderLeaderboard(){
+  const hist=(groupData&&groupData.hist)||{};
+  const today=new Date();
+  const names=[...new Set([...(groupData.members||[]),me])];
+  // Count sessions this month per member
+  const counts={};
+  names.forEach(n=>counts[n]=0);
+  for(let i=0;i<31;i++){
+    const d=new Date(today);d.setDate(today.getDate()-i);
+    if(d.getMonth()!==today.getMonth()) break;
+    const dkey=dk(d);
+    // count per person from attendance
+    names.forEach(name=>{
+      sessForDow(d.getDay()).forEach(sess=>{
+        const att=getAtt(dkey,sess);
+        if(att[name]==='yes') counts[name]=(counts[name]||0)+1;
+      });
+    });
+  }
+  const sorted=Object.entries(counts).sort(([,a],[,b])=>b-a);
+  const cont=document.getElementById('leaderboard');cont.innerHTML='';
+  const medals=['🥇','🥈','🥉'];
+  sorted.forEach(([name,count],i)=>{
+    const col=mCol(name);
+    const row=document.createElement('div');row.className='leaderboard-row';
+    row.innerHTML=`<div class="lb-rank">${medals[i]||`${i+1}`}</div>`;
+    const av=document.createElement('div');av.className='avatar-sm';
+    av.style.cssText=`background:${col.bg};color:${col.c};width:30px;height:30px;font-size:11px;border:none;cursor:pointer;flex-shrink:0;`;
+    av.textContent=initials(name);av.onclick=()=>openProfile(name);
+    const nm=document.createElement('div');nm.style.cssText='flex:1;font-size:14px;'+(name===me?'font-weight:700;':'');nm.textContent=name+(name===me?' (you)':'');
+    const cnt=document.createElement('div');cnt.className='lb-count';cnt.textContent=`${count} session${count!==1?'s':''}`;
+    row.appendChild(av);row.appendChild(nm);row.appendChild(cnt);
+    cont.appendChild(row);
+  });
+}
+
+// ── Profile sheet ──────────────────────────────────────────
+function openProfile(name){
+  const hist=(groupData&&groupData.hist)||{};
+  const today=new Date();
+  let streak=0,yc=0,mc=0;
+  for(let i=0;i<365;i++){
+    const d=new Date(today);d.setDate(today.getDate()-i);
+    const dkey=dk(d);
+    // For profile we count all sessions for that person
+    let swamToday=false;
+    sessForDow(d.getDay()).forEach(sess=>{
+      const att=getAtt(dkey,sess);
+      if(att[name]==='yes'){yc++;swamToday=true;if(d.getMonth()===today.getMonth()&&d.getFullYear()===today.getFullYear()) mc++;}
+    });
+    if(swamToday&&i===streak) streak++;
+  }
+  const col=mCol(name);
+  const sheet=document.getElementById('profile-sheet');
+  sheet.innerHTML=`
+    <div style="text-align:center;margin-bottom:20px;">
+      <div class="profile-avatar" style="background:${col.bg};color:${col.c};">${initials(name)}</div>
+      <div style="font-size:20px;font-weight:700;">${name}${name===me?' (you)':''}</div>
+      <div style="font-size:13px;color:var(--muted);margin-top:4px;">${groupData.name||'Squad'} member</div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:20px;">
+      <div class="stat-card" style="text-align:center;padding:12px;">
+        <div style="font-size:22px;font-weight:700;color:var(--streak);">${streak}</div>
+        <div style="font-size:11px;color:var(--muted);">🔥 Streak</div>
+      </div>
+      <div class="stat-card" style="text-align:center;padding:12px;">
+        <div style="font-size:22px;font-weight:700;color:var(--am);">${mc}</div>
+        <div style="font-size:11px;color:var(--muted);">📅 Month</div>
+      </div>
+      <div class="stat-card" style="text-align:center;padding:12px;">
+        <div style="font-size:22px;font-weight:700;color:var(--pm);">${yc}</div>
+        <div style="font-size:11px;color:var(--muted);">📊 Year</div>
+      </div>
+    </div>
+    <button class="btn-sec" onclick="closeProfile()" style="margin-top:8px;">Close</button>`;
+  document.getElementById('profile-overlay').classList.add('open');
+}
+function closeProfile(){document.getElementById('profile-overlay').classList.remove('open');}
+
+// ── Stats ──────────────────────────────────────────────────
 function renderStats(){
   const hist=(groupData&&groupData.hist)||{};
-  const today=new Date();let streak=0;
+  const today=new Date();let streak=0,mc=0,yc=0,weekCount=0;
   for(let i=0;i<365;i++){
     const d=new Date(today);d.setDate(today.getDate()-i);
-    if(Object.values(hist[dk(d)]||{}).some(Boolean)) streak++;else if(i>0) break;
+    const dkey=dk(d);
+    // My sessions
+    let mySwam=false;
+    sessForDow(d.getDay()).forEach(sess=>{
+      const att=getAtt(dkey,sess);
+      if(att[me]==='yes'){yc++;mySwam=true;
+        if(d.getMonth()===today.getMonth()&&d.getFullYear()===today.getFullYear()) mc++;
+        // This week (Mon-Sun)
+        const wstart=new Date(today);wstart.setDate(today.getDate()-((today.getDay()+6)%7));wstart.setHours(0,0,0,0);
+        if(d>=wstart) weekCount++;
+      }
+    });
+    if(mySwam&&i===streak) streak++;else if(i>0&&!mySwam) {}
   }
-  let mc=0,yc=0;
+  // Recalculate streak properly
+  streak=0;
   for(let i=0;i<365;i++){
     const d=new Date(today);d.setDate(today.getDate()-i);
-    const c=Object.values(hist[dk(d)]||{}).filter(Boolean).length;yc+=c;
-    if(d.getMonth()===today.getMonth()&&d.getFullYear()===today.getFullYear()) mc+=c;
+    const dkey=dk(d);
+    const swam=sessForDow(d.getDay()).some(sess=>getAtt(dkey,sess)[me]==='yes');
+    if(swam) streak++;else if(i>0) break;
   }
   document.getElementById('stat-streak').textContent=streak;
   document.getElementById('stat-month').textContent=mc;
@@ -931,7 +1069,8 @@ function renderStats(){
   const dots=document.getElementById('sdots');dots.innerHTML='';
   for(let i=0;i<7;i++){const d=document.createElement('div');d.className='sdot'+(i<Math.min(streak,7)?' on':'');dots.appendChild(d);}
   renderAchievements(yc,streak);
-
+  renderWeeklySummary(weekCount);
+  renderLeaderboard();
   const names=[...new Set([...(groupData.members||[]),me])];
   const sq=document.getElementById('squad-stats');sq.innerHTML='';
   const tk=todayKey();const sessions=sessForDow(new Date().getDay());
@@ -939,7 +1078,7 @@ function renderStats(){
   names.forEach(name=>{
     const col=mCol(name);
     const row=document.createElement('div');row.style.cssText='display:flex;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid var(--border);';
-    const av=document.createElement('div');av.className='avatar-sm';av.style.cssText=`background:${col.bg};color:${col.c};width:32px;height:32px;font-size:11px;border:none;`;av.textContent=initials(name);
+    const av=document.createElement('div');av.className='avatar-sm';av.style.cssText=`background:${col.bg};color:${col.c};width:32px;height:32px;font-size:11px;border:none;cursor:pointer;`;av.textContent=initials(name);av.onclick=()=>openProfile(name);
     const nm=document.createElement('div');nm.style.cssText='flex:1;font-size:14px;'+(name===me?'font-weight:700;':'');nm.textContent=name;
     const pips=document.createElement('div');pips.style.cssText='display:flex;gap:5px;';
     sessions.forEach(s=>{const att=getAtt(tk,s);const p=document.createElement('div');p.style.cssText=`width:10px;height:10px;border-radius:50%;background:${att[name]==='yes'?SESS[s].col:'var(--border)'};`;pips.appendChild(p);});
@@ -948,25 +1087,26 @@ function renderStats(){
   if(sq.lastChild) sq.lastChild.style.borderBottom='none';
 }
 
-// ── Tabs ──────────────────────────────────────────────────────
+// ── Tabs ───────────────────────────────────────────────────
 function switchTab(tab,el){
   document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));el.classList.add('active');
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(`tab-${tab}`).classList.add('active');
   if(tab==='week') renderWeekPlan();
   else if(tab==='calendar') renderCalendar();
-  else if(tab==='chat') renderChat();  // renderChat clears badge
+  else if(tab==='chat') renderChat();
   else if(tab==='stats') renderStats();
 }
 
-// ── Keyboard ──────────────────────────────────────────────────
+// ── Keyboard ───────────────────────────────────────────────
 document.getElementById('join-code').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('join-name').focus();});
 document.getElementById('join-name').addEventListener('keydown',e=>{if(e.key==='Enter')doJoin();});
 document.getElementById('create-name').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('create-group-name').focus();});
 document.getElementById('create-group-name').addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('create-code').focus();});
 document.getElementById('create-code').addEventListener('keydown',e=>{if(e.key==='Enter')doCreate();});
+document.getElementById('join-code').addEventListener('input',function(){if(this.value.length>=3) localStorage.setItem('squad_last_code',this.value.toUpperCase());});
 
-// ── Boot ──────────────────────────────────────────────────────
+// ── Boot ───────────────────────────────────────────────────
 (async()=>{
   loadSettings();
   try{
@@ -977,27 +1117,15 @@ document.getElementById('create-code').addEventListener('keydown',e=>{if(e.key==
     return;
   }
   document.getElementById('loading-overlay').style.display='none';
-
-  // Try to restore saved session
   const saved=tryRestoreSession();
   if(saved){
     const data=await loadGroup(saved.myGroup);
-    if(data){
-      me=saved.me;myGroup=saved.myGroup;groupData=data;
-      enterApp();return;
-    }
+    if(data){me=saved.me;myGroup=saved.myGroup;groupData=data;enterApp();return;}
   }
   document.getElementById('view-auth').style.display='block';
-
-  // Pre-fill saved code if any
   const savedCode=localStorage.getItem('squad_last_code');
   if(savedCode) document.getElementById('join-code').value=savedCode;
 })();
-
-// Save code as user types
-document.getElementById('join-code').addEventListener('input',function(){
-  if(this.value.length>=3) localStorage.setItem('squad_last_code',this.value.toUpperCase());
-});
 </script>
 </body>
 </html>
