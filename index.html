@@ -440,9 +440,9 @@ function loadSettings(){
 function saveSettings(){localStorage.setItem('squad_settings',JSON.stringify(settings));}
 function applySettings(){
   document.documentElement.setAttribute('data-dark',settings.dark?'1':'0');
-  document.getElementById('tog-dark').classList.toggle('on',settings.dark);
-  document.getElementById('tog-anim').classList.toggle('on',settings.anim);
-  document.getElementById('tog-absent').classList.toggle('on',settings.absent);
+  const togDark=document.getElementById('tog-dark');if(togDark) togDark.classList.toggle('on',settings.dark);
+  const togAnim=document.getElementById('tog-anim');if(togAnim) togAnim.classList.toggle('on',settings.anim);
+  const togAbsent=document.getElementById('tog-absent');if(togAbsent) togAbsent.classList.toggle('on',settings.absent);
   const waveEl=document.querySelector('.wave-bg');
   if(waveEl) waveEl.style.display=settings.anim?'block':'none';
   const absentNotice=document.getElementById('absent-notice');
@@ -1108,21 +1108,45 @@ document.getElementById('join-code').addEventListener('input',function(){if(this
 
 // ── Boot ───────────────────────────────────────────────────
 (async()=>{
-  loadSettings();
+  // Apply dark mode immediately before anything else
   try{
+    const s=JSON.parse(localStorage.getItem('squad_settings')||'{}');
+    if(s.dark) document.documentElement.setAttribute('data-dark','1');
+  }catch(e){}
+
+  // Try to restore saved session first (show app immediately if possible)
+  const saved=tryRestoreSession();
+
+  // Test Supabase connection with timeout
+  let connected=false;
+  try{
+    const controller=new AbortController();
+    const timeout=setTimeout(()=>controller.abort(),8000);
     const{error}=await sb.from('squads').select('id').limit(1);
-    if(error) throw error;
-  }catch(e){
-    document.getElementById('loading-msg').textContent='Could not connect. Check your internet and reload.';
+    clearTimeout(timeout);
+    if(!error) connected=true;
+  }catch(e){connected=false;}
+
+  if(!connected){
+    // Still show auth even if connection failed — let user try
+    document.getElementById('loading-overlay').style.display='none';
+    document.getElementById('view-auth').style.display='block';
+    showPanel('auth-choose');
     return;
   }
+
   document.getElementById('loading-overlay').style.display='none';
-  const saved=tryRestoreSession();
+
   if(saved){
-    const data=await loadGroup(saved.myGroup);
-    if(data){me=saved.me;myGroup=saved.myGroup;groupData=data;enterApp();return;}
+    try{
+      const data=await loadGroup(saved.myGroup);
+      if(data){me=saved.me;myGroup=saved.myGroup;groupData=data;loadSettings();enterApp();return;}
+    }catch(e){}
   }
+
+  loadSettings();
   document.getElementById('view-auth').style.display='block';
+  showPanel('auth-choose');
   const savedCode=localStorage.getItem('squad_last_code');
   if(savedCode) document.getElementById('join-code').value=savedCode;
 })();
