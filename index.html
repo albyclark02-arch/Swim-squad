@@ -208,6 +208,13 @@ html,body{min-height:100%;background:var(--bg);color:var(--text);font-family:var
 
 <div class="toast" id="toast"></div>
 
+<!-- LOADING OVERLAY -->
+<div class="loading-overlay" id="loading-overlay">
+  <div class="spinner"></div>
+  <div style="font-size:15px;color:var(--muted);" id="loading-msg">🌊 Connecting…</div>
+  <div style="font-size:12px;color:var(--hint);margin-top:4px;" id="loading-sub">Talking to the database…</div>
+</div>
+
 <!-- SETTINGS -->
 <div class="settings-panel" id="settings-panel">
   <div class="settings-backdrop" onclick="closeSettings()"></div>
@@ -1107,48 +1114,66 @@ document.getElementById('create-code').addEventListener('keydown',e=>{if(e.key==
 document.getElementById('join-code').addEventListener('input',function(){if(this.value.length>=3) localStorage.setItem('squad_last_code',this.value.toUpperCase());});
 
 // ── Boot ───────────────────────────────────────────────────
-(async()=>{
-  // Apply dark mode immediately before anything else
-  try{
-    const s=JSON.parse(localStorage.getItem('squad_settings')||'{}');
-    if(s.dark) document.documentElement.setAttribute('data-dark','1');
-  }catch(e){}
-
-  // Try to restore saved session first (show app immediately if possible)
-  const saved=tryRestoreSession();
-
-  // Test Supabase connection with timeout
-  let connected=false;
-  try{
-    const controller=new AbortController();
-    const timeout=setTimeout(()=>controller.abort(),8000);
-    const{error}=await sb.from('squads').select('id').limit(1);
-    clearTimeout(timeout);
-    if(!error) connected=true;
-  }catch(e){connected=false;}
-
-  if(!connected){
-    // Still show auth even if connection failed — let user try
-    document.getElementById('loading-overlay').style.display='none';
-    document.getElementById('view-auth').style.display='block';
-    showPanel('auth-choose');
-    return;
-  }
-
-  document.getElementById('loading-overlay').style.display='none';
-
-  if(saved){
-    try{
-      const data=await loadGroup(saved.myGroup);
-      if(data){me=saved.me;myGroup=saved.myGroup;groupData=data;loadSettings();enterApp();return;}
-    }catch(e){}
-  }
-
-  loadSettings();
+function showAuth(){
+  const ol=document.getElementById('loading-overlay');
+  if(ol) ol.style.display='none';
   document.getElementById('view-auth').style.display='block';
   showPanel('auth-choose');
   const savedCode=localStorage.getItem('squad_last_code');
   if(savedCode) document.getElementById('join-code').value=savedCode;
+}
+
+// Hard fallback — if nothing happens in 6 seconds, show auth anyway
+const bootFallback=setTimeout(()=>{ showAuth(); },6000);
+
+(async()=>{
+  // Apply dark mode immediately
+  try{const s=JSON.parse(localStorage.getItem('squad_settings')||'{}');if(s.dark) document.documentElement.setAttribute('data-dark','1');}catch(e){}
+
+  const sub=document.getElementById('loading-sub');
+
+  // Check if Supabase loaded
+  if(typeof supabase==='undefined'){
+    if(sub) sub.textContent='Loading library…';
+    await new Promise(r=>setTimeout(r,2000));
+    if(typeof supabase==='undefined'){clearTimeout(bootFallback);showAuth();return;}
+  }
+
+  if(sub) sub.textContent='Connecting to database…';
+
+  // Test connection
+  let connected=false;
+  try{
+    const{error}=await Promise.race([
+      sb.from('squads').select('id').limit(1),
+      new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),5000))
+    ]);
+    if(!error) connected=true;
+  }catch(e){connected=false;}
+
+  clearTimeout(bootFallback);
+
+  if(!connected){showAuth();return;}
+
+  if(sub) sub.textContent='Checking your session…';
+
+  // Try restore session
+  const saved=tryRestoreSession();
+  if(saved){
+    try{
+      const data=await loadGroup(saved.myGroup);
+      if(data){
+        me=saved.me;myGroup=saved.myGroup;groupData=data;
+        loadSettings();
+        const ol=document.getElementById('loading-overlay');
+        if(ol) ol.style.display='none';
+        enterApp();return;
+      }
+    }catch(e){}
+  }
+
+  loadSettings();
+  showAuth();
 })();
 </script>
 </body>
